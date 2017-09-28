@@ -1,6 +1,7 @@
 #pragma once
 #include <array>
 #include <cmath>
+#include <iostream>
 
 using namespace std;
 
@@ -14,11 +15,11 @@ namespace math
   protected:
     array<T, size> vec;
   public:
-    Vector() {}
+    Vector() {if (size == 0) throw "Invalid size specified";}
     ~Vector() {}
-    inline T at(const unsigned int i) const { return vec.at(i); }
+    inline T at(const unsigned int i) const { if (i > size) throw "Index out of the vector"; return vec.at(i); }
 
-    Vector<T, size> cross(const Vector<T, size> &v) const
+    Vector cross(const Vector &v) const
     {
       Vector res;
 
@@ -60,30 +61,25 @@ namespace math
       }
       return sqrt(somme);
     }
-    virtual Vector<T, size> to_unit() const
+
+    Vector to_unit() const
     {
       Vector<T, size> v;
       for (int i = 0; i < size; i++)
         v.vec[i] = ((1 / norme()) * (vec[i]));
     }
 
-    T operator[](unsigned int i) const
+    T operator[](int i) const
     {
-      if (i >= size)
-        throw "Index out of array";
-
         return vec[i];
     }
 
-    T &operator[](unsigned int i)
+    T &operator[](int i)
     {
-      if (i >= size)
-        throw "Index out of array";
-
       return vec[i];
     }
 
-    Vector<T, size> operator+(Vector<T, size> &v) const
+    Vector operator+(Vector &v) const
     {
       Vector result;
 
@@ -95,7 +91,7 @@ namespace math
       return result;
     }
 
-    Vector<T, size> &operator+=(Vector<T, size> &v)
+    Vector &operator+=(Vector &v)
     {
       for (int i = 0; i < size; ++i)
       {
@@ -105,7 +101,7 @@ namespace math
       return (*this);
     }
 
-    Vector<T, size> operator-() const
+    Vector operator-() const
     {
       Vector<T, size> res;
 
@@ -115,7 +111,7 @@ namespace math
       return res;
     }
 
-    Vector<T, size> operator-(Vector<T, size> &v) const
+    Vector operator-(Vector &v) const
     {
       Vector<T, size> res;
 
@@ -125,7 +121,7 @@ namespace math
       return res;
     }
 
-    Vector<T, size> &operator-=(Vector<T, size> &v)
+    Vector &operator-=(Vector &v)
     {
       for (int i = 0; i < size; ++i)
         vec[i] = vec[i] - v[i];
@@ -133,9 +129,9 @@ namespace math
       return (*this);
     }
 
-    virtual Vector<T, size> operator*(float scalar) const
+    virtual Vector operator*(float scalar) const
     {
-      Vector<T, size> v;
+      Vector v;
 
       for (int i = 0; i < size; ++i)
       {
@@ -145,7 +141,7 @@ namespace math
       return v;
     }
 
-    T operator*(Vector <T, size> &v) const
+    T operator*(Vector &v) const
     {
       T somme;
 
@@ -157,9 +153,23 @@ namespace math
       return somme;
     }
 
-    friend Vector<T, size> operator*(float scalar, Vector <T, size> &v2)
+    friend Vector operator*(float scalar, Vector &v2)
     {
       return v2 * scalar;
     }
   };
+  
+  template <class T, unsigned int size>
+  ostream &operator<<(ostream &s, Vector<T, size> &v)
+  {
+    s << "(";
+    s << v[0];
+
+    for (int i = 1; i < size; ++i)
+      s << ", " << v[i];
+    
+    s << ")";
+
+    return s;
+  }
 }
