@@ -16,9 +16,9 @@ namespace math
   public:
     Vector() {}
     ~Vector() {}
-    inline T at(unsigned int i){ return vec.at(i); }
+    inline T at(const unsigned int i) const { return vec.at(i); }
 
-    Vector<T, size> cross(Vector<T, size> &v)
+    Vector<T, size> cross(const Vector<T, size> &v) const
     {
       Vector res;
 
@@ -32,12 +32,12 @@ namespace math
       return res;
     }
 
-    bool is_ortho(Vector &v)
+    bool is_ortho(const Vector &v) const
     {
       return ((*this) * v) == 0;
     }
 
-    bool is_null()
+    bool is_null() const
     {
       for (int i = 0; i < size; ++i)
         if (isnan((*this)[i]))
@@ -45,22 +45,29 @@ namespace math
       return true;
     }
 
-    bool is_unit()
+    bool is_unit() const
     {
       return norme() == 1;
     }
 
-    float norme()
+    float norme() const
     {
-      float n = (*this) * (*this);
-      return sqrt(n);
+      float somme;
+
+      for (int i = 0; i < size; ++i)
+      {
+        somme += vec[i] * vec[i];
+      }
+      return sqrt(somme);
     }
-    virtual Vector<T, size> to_unit()
+    virtual Vector<T, size> to_unit() const
     {
-      return (1 / norme()) * (*this);
+      Vector<T, size> v;
+      for (int i = 0; i < size; i++)
+        v.vec[i] = ((1 / norme()) * (vec[i]));
     }
 
-    T operator[](unsigned int i)
+    T operator[](unsigned int i) const
     {
       if (i >= size)
         throw "Index out of array";
@@ -76,7 +83,7 @@ namespace math
       return vec[i];
     }
 
-    Vector<T, size> operator+(Vector<T, size> &v)
+    Vector<T, size> operator+(Vector<T, size> &v) const
     {
       Vector result;
 
@@ -98,7 +105,7 @@ namespace math
       return (*this);
     }
 
-    Vector<T, size> operator-()
+    Vector<T, size> operator-() const
     {
       Vector<T, size> res;
 
@@ -108,7 +115,7 @@ namespace math
       return res;
     }
 
-    Vector<T, size> operator-(Vector<T, size> &v)
+    Vector<T, size> operator-(Vector<T, size> &v) const
     {
       Vector<T, size> res;
 
@@ -126,7 +133,7 @@ namespace math
       return (*this);
     }
 
-    virtual Vector<T, size> operator*(float scalar)
+    virtual Vector<T, size> operator*(float scalar) const
     {
       Vector<T, size> v;
 
@@ -138,24 +145,21 @@ namespace math
       return v;
     }
 
-    T operator*(Vector <T, size> &v1, Vector <T, size> &v2)
+    T operator*(Vector <T, size> &v) const
     {
       T somme;
 
       for (int i = 0; i < size; ++i)
       {
-        somme += v1[i] * v2[i];
+        somme += vec[i] * v[i];
       }
 
       return somme;
     }
 
-    friend Vector<T, size> operator*(float scalar, Vector <T, size> &v2);
+    friend Vector<T, size> operator*(float scalar, Vector <T, size> &v2)
+    {
+      return v2 * scalar;
+    }
   };
-
-  <class T, unsigned int size>
-  Vector<T, size> operator*(T scalar, Vector <T, size> &v2)
-  {
-    return v2 * scalar;
-  }
 }
