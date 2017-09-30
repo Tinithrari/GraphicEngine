@@ -10,13 +10,26 @@ namespace math
     class Matrix
     {
     private:
-        Array<Array<T, m>, n> mat;
+        array<array<T, m>, n> mat;
         bool isReversable()
         {
             return false;
         }
     public:
         Matrix() {if (n == 0 || m == 0) throw "Incorrect size";}
+        Matrix(Matrix &m2)
+        {
+            for (int i = 0; i < n; ++i)
+            {
+                for (int j = 0; j < m; ++j)
+                {
+                    mat[i][j] = m2[i][j];
+                }
+            }
+        }
+
+        Matrix(array<array<T, m>, n> &a): mat(a) {}
+
         ~Matrix() {}
         T at(unsigned int i, unsigned int j)
         {
@@ -45,6 +58,32 @@ namespace math
                 }
             }
             return false;
+        }
+
+        Matrix cofacteur()
+        {
+            Matrix cofac;
+            for (int i = 0; i < n; ++i)
+            {
+                for (int j = 0; j < n; j++)
+                {
+                    cofac[i][j] = (((-1) * (i + j + 2)) * mat[i][j]);
+                }
+            }
+            return cofac;
+        }
+
+        float determinant()
+        {
+            Matrix cofac = cofacteur();
+            float det;
+
+            for (int i = 0; i < m; ++i)
+            {
+                det += mat[0][i] * cofac[0][i];
+            }
+
+            return det;
         }
 
         bool is_ortho()
@@ -81,6 +120,11 @@ namespace math
         T operator[][](int i, int j) const
         {
             return mat[i][j];
+        }
+
+        array<T, m> &operator[](int i)
+        {
+            return mat[i];
         }
 
         Matrix operator+(Matrix &m2) const
@@ -178,6 +222,20 @@ namespace math
                     mat[i][j] *= scalar;
                 }
             }
+        }
+
+        bool operator==(Matrix &m2)
+        {
+            for (int i = 0; i < n; ++i)
+            {
+                for (int j = 0; j < m; ++j)
+                {
+                    if (mat[i][j] != m2[i][j])
+                        return false;
+                }
+            }
+
+            return true;
         }
     };
 
