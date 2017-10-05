@@ -1,6 +1,10 @@
 #pragma once
 
+#include "math/Vector.hpp"
+
+#include <array>
 #include <exception>
+#include <iostream>
 
 using namespace std;
 
@@ -11,13 +15,13 @@ namespace math
     {
     private:
         array<array<T, m>, n> mat;
-        bool isReversable()
+        bool isReversable() const
         {
             return false;
         }
     public:
         Matrix() {if (n == 0 || m == 0) throw "Incorrect size";}
-        Matrix(Matrix &m2)
+        Matrix(const Matrix &m2)
         {
             for (int i = 0; i < n; ++i)
             {
@@ -31,7 +35,7 @@ namespace math
         Matrix(array<array<T, m>, n> &a): mat(a) {}
 
         ~Matrix() {}
-        T at(unsigned int i, unsigned int j)
+        T at(const unsigned int i, const unsigned int j) const
         {
             if (i >= n || j >= m)
                 throw ("Index out of the matrix");
@@ -39,15 +43,17 @@ namespace math
             return mat[i][j];
         }
 
-        Matrix reverse()
+        Matrix reverse() const
         {
-            if (! isInversible())
+            Matrix m2;
+            if (! isReversable())
                 throw "This matrix is not reversable";
 
             // TODO
+            return m2;
         }
 
-        bool is_null()
+        bool is_null() const
         {
             for (int i = 0; i < n; ++i)
             {
@@ -60,20 +66,20 @@ namespace math
             return false;
         }
 
-        Matrix cofacteur()
+        Matrix cofacteur() const
         {
             Matrix cofac;
             for (int i = 0; i < n; ++i)
             {
                 for (int j = 0; j < n; j++)
                 {
-                    cofac[i][j] = (((-1) * (i + j + 2)) * mat[i][j]);
+                    cofac[i][j] = ((pow((-1), (i + j + 2))) * mat[i][j]);
                 }
             }
             return cofac;
         }
 
-        float determinant()
+        float determinant() const
         {
             Matrix cofac = cofacteur();
             float det;
@@ -86,7 +92,7 @@ namespace math
             return det;
         }
 
-        bool is_ortho()
+        bool is_ortho() const
         {
             Matrix rev;
             if (n != m)
@@ -94,10 +100,10 @@ namespace math
 
             rev = reverse();
 
-            return rev == transpose()
+            return rev == transpose();
         }
 
-        Matrix<T, m ,n> transpose()
+        Matrix<T, m ,n> transpose() const
         {
             Matrix<T, m, n> res;
 
@@ -112,22 +118,17 @@ namespace math
             return res;
         }
 
-        T &operator[][](int i, int j)
-        {
-            return mat[i][j];
-        }
-
-        T operator[][](int i, int j) const
-        {
-            return mat[i][j];
-        }
-
-        array<T, m> &operator[](int i)
+        array<T, m> operator[](const int i) const
         {
             return mat[i];
         }
 
-        Matrix operator+(Matrix &m2) const
+        array<T, m> &operator[](const int i)
+        {
+            return mat[i];
+        }
+
+        Matrix operator+(const Matrix &m2) const
         {
             Matrix res;
 
@@ -141,7 +142,18 @@ namespace math
             return res;
         }
 
-        Matrix &operator+=(Matrix &m2)
+        Matrix &operator =(const array<array<T, m>, n> &a)
+        {
+            for (int i = 0; i < n; ++i)
+            {
+                for (int j = 0; j < m; ++j)
+                {
+                    mat[i][j] = a[i][j];
+                }
+            }
+        }
+
+        Matrix &operator+=(const Matrix &m2)
         {
             for (int i = 0; i < n; ++i)
             {
@@ -152,7 +164,7 @@ namespace math
             }
         }
 
-        Matrix operator*(Vector<T, m> &v)
+        Matrix operator*(const Vector<T, m> &v) const
         {
             Matrix res;
 
@@ -166,7 +178,7 @@ namespace math
             return res;
         }
 
-        Matrix operator*(float scalar)
+        Matrix operator*(const float scalar) const
         {
             Matrix res;
 
@@ -182,7 +194,7 @@ namespace math
         }
 
         template<unsigned int o>
-        Matrix<T, n, o> operator*(Matrix<T, m, o> &m2)
+        Matrix<T, n, o> operator*(const Matrix<T, m, o> &m2) const
         {
             Matrix res;
             
@@ -192,7 +204,7 @@ namespace math
                 {
                     for (int k = 0; k < m; ++k)
                     {
-                       res[i][j] += mat[i][k] * v[k][o];
+                       res[i][j] += mat[i][k] * m2[k][o];
                     }
                 }
             }
@@ -200,8 +212,9 @@ namespace math
             return res;
         }
 
-        Matrix operator*=(Vector<T, n> &v)
+        Matrix operator*=(const Vector<T, n> &v)
         {
+            Matrix res;
             for (int i = 0; i < n; ++i)
             {
                 for (int j = 0; j < m; ++j)
@@ -213,7 +226,7 @@ namespace math
             return (*this);
         }
 
-        Matrix operator*=(float scalar)
+        Matrix operator*=(const float scalar)
         {
             for (int i = 0; i < n; ++i)
             {
@@ -224,7 +237,7 @@ namespace math
             }
         }
 
-        bool operator==(Matrix &m2)
+        bool operator==(const Matrix &m2) const
         {
             for (int i = 0; i < n; ++i)
             {
@@ -240,18 +253,33 @@ namespace math
     };
 
     template<class T, unsigned int n, unsigned int m>
-    Matrix<T, n, m> &operator*(float scalar, Matrix<T, n, m> &m)
+    Matrix<T, n, m> &operator*(float scalar, Matrix<T, n, m> &matrice)
     {
-        Matrix res;
+        Matrix<T, n, m> res;
         
         for (int i = 0; i < n; ++i)
         {
             for (int j = 0; j < m; ++j)
             {
-                res[i][j] = mat[i][j] * scalar;
+                res[i][j] = matrice[i][j] * scalar;
             }
         }
         
         return res;
+    }
+
+    template<class T, unsigned int n, unsigned int m>
+    ostream &operator<<(ostream &out, const Matrix<T, n, m> &matrice)
+    {
+        for (int i = 0; i < n; ++i)
+        {
+            cout << "(";
+            for (int j = 0; j < m; ++j)
+            {
+                out << (j != 0 ? ", " : "") << matrice[i][j];
+            }
+            out << ")" << endl;
+        }
+        return out;
     }
 }
