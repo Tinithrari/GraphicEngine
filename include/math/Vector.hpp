@@ -16,6 +16,13 @@ namespace math
     array<T, size> vec;
   public:
     Vector() {if (size == 0) throw "Invalid size specified";}
+    Vector(const initializer_list<T> &list)
+    {
+      for (int i = 0; i < list.size(); ++i)
+      {
+        vec[i] = list[i];
+      }
+    }
     ~Vector() {}
     inline T at(const unsigned int i) const { if (i > size) throw "Index out of the vector"; return vec.at(i); }
 
@@ -48,10 +55,10 @@ namespace math
 
     bool is_unit() const
     {
-      return norme() == 1;
+      return norm() == 1;
     }
 
-    float norme() const
+    float norm() const
     {
       float somme;
 
@@ -66,7 +73,7 @@ namespace math
     {
       Vector<T, size> v;
       for (int i = 0; i < size; i++)
-        v.vec[i] = ((1 / norme()) * (vec[i]));
+        v.vec[i] = ((1 / norm()) * (vec[i]));
     }
 
     T operator[](int i) const
@@ -79,7 +86,23 @@ namespace math
       return vec[i];
     }
 
-    Vector operator+(Vector &v) const
+    bool operator==(const Vector &v) const
+    {
+      for (int i = 0; i < size; ++i)
+        if (v[i] != vec[i])
+          return false;
+      return true;
+    }
+
+    bool operator!=(const Vector &v) const
+    {
+      for (int i = 0; i < size; ++i)
+        if (v[i] != vec[i])
+          return true;
+      return false;
+    }
+
+    Vector operator+(const Vector &v) const
     {
       Vector result;
 
@@ -172,4 +195,34 @@ namespace math
 
     return s;
   }
+
+  class Vec2i : public Vector<int, 2>
+  {
+    using Vector::Vector;
+  };
+  
+  class Vec3i : public Vector<int, 3>
+  {
+    using Vector::Vector;
+  };
+
+  class Vec4i : public Vector<int, 4>
+  {
+    using Vector::Vector;
+  };
+
+  class Vec2r : public Vector<float, 2>
+  {
+    using Vector::Vector;
+  };
+
+  class Vec3r : public Vector<float, 3>
+  {
+    using Vector::Vector;
+  };
+
+  class Vec4r : public Vector<float, 4>
+  {
+    using Vector::Vector;
+  };
 }

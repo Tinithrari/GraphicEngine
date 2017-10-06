@@ -9,9 +9,10 @@
 #include <vector>
 #include <iostream>
 #include "unit_test.h"
-#include "libmatrix.h"
+#include "math/Matrix.hpp"
+#include "math/Vector.hpp"
 
-using namespace libmatrix;
+using namespace math;
 
 int test_is_null()
 {

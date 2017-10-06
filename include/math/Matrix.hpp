@@ -19,6 +19,18 @@ namespace math
         {
             return false;
         }
+
+        Matrix<T, n, n> identite()
+        {
+            math::Matrix<T, n, n> id;
+        
+            for (int i = 0; i < n; ++i)
+            {
+                id[i][i] = 1;
+            }
+        
+            return id;
+        }
     public:
         Matrix() {if (n == 0 || m == 0) throw "Incorrect size";}
         Matrix(const Matrix &m2)
@@ -28,6 +40,17 @@ namespace math
                 for (int j = 0; j < m; ++j)
                 {
                     mat[i][j] = m2[i][j];
+                }
+            }
+        }
+
+        Matrix(const initializer_list<initializer_list<T>> &list)
+        {
+            for (int i = 0; i < list.size(); ++i)
+            {
+                for (int j = 0; j < list[i].size(); ++j)
+                {
+                    mat[i][j] = list[i][j];
                 }
             }
         }
@@ -45,12 +68,53 @@ namespace math
 
         Matrix reverse() const
         {
-            Matrix m2;
-            if (! isReversable())
-                throw "This matrix is not reversable";
 
-            // TODO
-            return m2;
+            if (n != m)
+            throw "La matrice n'est pas carré";
+    
+            Matrix<T, n, n> id = identite();
+            Matrix<T, n, m> copie = *this;
+            int pivot = -1;
+        
+            for (int j = 0; j < m; ++j)
+            {
+                int max = -1;
+                float diviseur;
+                for (int i = (pivot++) + 1; i < n; ++i)
+                {
+                    if (copie[i][j] != 0 && abs(copie[i][j]) > abs(copie[j][max]))
+                        max = j;
+                }
+        
+                if (max == -1)
+                    throw "Matrix not reversable";
+        
+                diviseur = (float) (1 / copie[max][j]);
+                for (int i = 0; i < m; ++i)
+                {
+                    copie[max][i] *= diviseur;
+                    id[max][i] *= diviseur;
+                }
+                
+                swap(copie[pivot], copie[max]);
+                swap(id[pivot], id[max]);
+        
+                for (int i = 0; i < n; i++)
+                {
+                    if (i == pivot)
+                        continue;
+        
+                    T multCopie = copie[i][j];
+        
+                    for (int k = 0; k < m; ++k)
+                    {
+                        copie[i][k] -= (copie[pivot][k] * multCopie);
+                        id[i][k] -= (id[pivot][k] * multCopie);
+                    }
+                }
+            }
+    
+            return id;
         }
 
         bool is_null() const
@@ -257,4 +321,10 @@ namespace math
         }
         return out;
     }
+
+    class Mat44r : Matrix<float, 4, 4>
+    {};
+
+    static const Matrix<int, 4, 4> Identity4i({{1,0,0,0}, {0,1,0,0}, {0,0,1,0}, {0,0,0,1}});
+    static const Matrix<float, 4, 4> Identity4r({{1,0,0,0}, {0,1,0,0}, {0,0,1,0}, {0,0,0,1}});
 }
