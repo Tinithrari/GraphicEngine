@@ -6,6 +6,10 @@
 #include <exception>
 #include <iostream>
 
+#ifndef REAL_TYPE
+typedef float real;
+#endif
+
 using namespace std;
 
 namespace math
@@ -32,7 +36,19 @@ namespace math
             return id;
         }
     public:
-        Matrix() {if (n == 0 || m == 0) throw "Incorrect size";}
+        Matrix() 
+        {
+            if (n == 0 || m == 0)
+                throw "Incorrect size";
+            
+            for (int i = 0; i < n; i++ )
+            {
+                for (int j = 0; j < m; j++)
+                {
+                    mat[i][j] = NAN;
+                }
+            }
+        }
         Matrix(const Matrix &m2)
         {
             for (int i = 0; i < n; ++i)
@@ -44,13 +60,15 @@ namespace math
             }
         }
 
-        Matrix(const initializer_list<initializer_list<T>> &list)
+        Matrix(const initializer_list<initializer_list<T>> &table)
         {
-            for (int i = 0; i < list.size(); ++i)
+            int i = 0;
+            for (const initializer_list<T> *liste = table.begin(); liste != table.end(); ++liste, ++i)
             {
-                for (int j = 0; j < list[i].size(); ++j)
+                int j = 0;
+                for (const T* element = liste->begin(); element != liste->end(); ++element, ++j)
                 {
-                    mat[i][j] = list[i][j];
+                    mat[i][j] = *element;
                 }
             }
         }

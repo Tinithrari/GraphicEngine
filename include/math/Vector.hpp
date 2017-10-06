@@ -3,26 +3,45 @@
 #include <cmath>
 #include <iostream>
 
+#ifndef REAL_TYPE
+typedef float real;
+#endif
+
 using namespace std;
+
+const unsigned int MIN_ARGS_CROSS = 3;
 
 namespace math
 {
   template<class T, unsigned int size>
   class Vector
   {
-  private:
-    const unsigned int MIN_ARGS_CROSS = 3;
   protected:
     array<T, size> vec;
   public:
-    Vector() {if (size == 0) throw "Invalid size specified";}
+    Vector() 
+    {
+      if (size == 0)
+        throw "Invalid size specified";
+
+      for (int i = 0; i < size; ++i)
+        vec[i] = T();
+    }
     Vector(const initializer_list<T> &list)
     {
-      for (int i = 0; i < list.size(); ++i)
+      int i = 0;
+      for (const T* element = list.begin(); element != list.end(); ++element, ++i)
       {
-        vec[i] = list[i];
+        vec[i] = *element;
       }
     }
+
+    Vector(const Vector &v)
+    {
+      for (int i = 0; i < size; ++i)
+        vec[i] = v[i];
+    }
+
     ~Vector() {}
     inline T at(const unsigned int i) const { if (i > size) throw "Index out of the vector"; return vec.at(i); }
 
@@ -48,9 +67,9 @@ namespace math
     bool is_null() const
     {
       for (int i = 0; i < size; ++i)
-        if (isnan((*this)[i]))
-          return false;
-      return true;
+        if (isnan(vec[i]))
+          return true;
+      return false;
     }
 
     bool is_unit() const
@@ -60,11 +79,11 @@ namespace math
 
     float norm() const
     {
-      float somme;
+      float somme = 0;
 
       for (int i = 0; i < size; ++i)
       {
-        somme += vec[i] * vec[i];
+        somme += (vec[i] * vec[i]);
       }
       return sqrt(somme);
     }
@@ -134,7 +153,7 @@ namespace math
       return res;
     }
 
-    Vector operator-(Vector &v) const
+    Vector operator-(const Vector &v) const
     {
       Vector<T, size> res;
 
@@ -152,7 +171,7 @@ namespace math
       return (*this);
     }
 
-    virtual Vector operator*(float scalar) const
+    Vector operator*(float scalar) const
     {
       Vector v;
 
@@ -183,7 +202,7 @@ namespace math
   };
   
   template <class T, unsigned int size>
-  ostream &operator<<(ostream &s, Vector<T, size> &v)
+  ostream &operator<<(ostream &s, const Vector<T, size> &v)
   {
     s << "(";
     s << v[0];
@@ -194,6 +213,53 @@ namespace math
     s << ")";
 
     return s;
+  }
+
+  template<class T, unsigned int size>
+  Vector<T, size> cross(const Vector<T, size> &v1, const Vector<T, size> &v2)
+  {
+    Vector<T, size> res;
+
+    if (size < MIN_ARGS_CROSS)
+      throw "The vector must have at least three arguments";
+
+    res[0] = (v1[1] * v2[2]) - (v1[2] * v2[1]);
+    res[1] = (v1[2] * v2[0]) - (v1[0] * v2[2]);
+    res[2] = (v1[0] * v2[1]) - (v1[1] * v2[0]);
+
+    return res;
+  }
+
+  template<class T, unsigned int size>
+  Vector<T, size> dot(Vector<T, size> &vec, float scalar)
+  {
+    Vector<T, size> v;
+
+    for (int i = 0; i < size; ++i)
+    {
+      v[i] = vec[i] * scalar;
+    }
+
+    return v;
+  }
+
+  template<class T, unsigned int size>
+  T dot(Vector<T, size> &vec, Vector<T, size> &v)
+  {
+    T somme = 0;
+
+    for (int i = 0; i < size; ++i)
+    {
+      somme += vec[i] * v[i];
+    }
+
+    return somme;
+  }
+
+  template<class T, unsigned int size>
+  Vector<T, size> dot(float scalar, Vector<T, size> &v2)
+  {
+    return v2 * scalar;
   }
 
   class Vec2i : public Vector<int, 2>

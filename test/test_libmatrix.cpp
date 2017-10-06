@@ -216,7 +216,7 @@ int test_operator_minus2()
     Vec4r c { 0.0f, 1.5f, -1.8f, 0.4f };
     TestVector test_vec
     {
-        { "a - b == c", a - b == c }
+        { "a - b == c", (a - b) == c }
     };
 
     return run_tests( "operator-( Vector )", test_vec );
