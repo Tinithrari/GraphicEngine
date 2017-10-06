@@ -66,32 +66,6 @@ namespace math
             return false;
         }
 
-        Matrix cofacteur() const
-        {
-            Matrix cofac;
-            for (int i = 0; i < n; ++i)
-            {
-                for (int j = 0; j < n; j++)
-                {
-                    cofac[i][j] = ((pow((-1), (i + j + 2))) * mat[i][j]);
-                }
-            }
-            return cofac;
-        }
-
-        float determinant() const
-        {
-            Matrix cofac = cofacteur();
-            float det;
-
-            for (int i = 0; i < m; ++i)
-            {
-                det += mat[0][i] * cofac[0][i];
-            }
-
-            return det;
-        }
-
         bool is_ortho() const
         {
             Matrix rev;
@@ -151,6 +125,7 @@ namespace math
                     mat[i][j] = a[i][j];
                 }
             }
+            return *this;
         }
 
         Matrix &operator+=(const Matrix &m2)

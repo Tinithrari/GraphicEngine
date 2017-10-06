@@ -8,28 +8,6 @@
 
 using namespace std;
 
-template<class T, unsigned int n, unsigned int m>
-math::Matrix<T, n, m> inverse_determinant(const math::Matrix<T, n, m> &matrice)
-{
-    math::Matrix<T, n, m> cofacteurs;
-    math::Matrix<T, n, m> transp;
-    T determinant;
-
-    if (n != m)
-        throw "La matrice n'est pas carré";
-
-    transp = matrice.transpose(); 
-    cofacteurs = transp.cofacteur();
-    determinant = matrice.determinant();
-
-    cout << cofacteurs;
-
-    if (determinant == 0)
-        throw "Matrice non inversible";
-
-    return cofacteurs * (1/determinant);
-}
-
 template<class T, unsigned int n>
 math::Matrix<T, n, n> identite()
 {
@@ -51,20 +29,20 @@ math::Matrix<T, n, m> inverse_gauss(const math::Matrix<T, n, m> &matrice)
 
     math::Matrix<T, n, n> id = identite<T, n>();
     math::Matrix<T, n, m> copie = matrice;
-    int pivot = 0;
+    int pivot = -1;
 
-    for (int j = 0; j < m; ++j, ++pivot)
+    for (int j = 0; j < m; ++j)
     {
         int max = -1;
         float diviseur;
-        for (int i = pivot; i < n; ++i)
+        for (int i = (pivot++) + 1; i < n; ++i)
         {
             if (copie[i][j] != 0 && abs(copie[i][j]) > abs(copie[j][max]))
                 max = j;
         }
 
         if (max == -1)
-            throw "math::Matrix not reversable";
+            throw "Matrix not reversable";
 
         diviseur = (float) (1 / copie[max][j]);
         for (int i = 0; i < m; ++i)
@@ -72,22 +50,21 @@ math::Matrix<T, n, m> inverse_gauss(const math::Matrix<T, n, m> &matrice)
             copie[max][i] *= diviseur;
             id[max][i] *= diviseur;
         }
-
-        if (pivot != max)
-        {
-            swap(copie[pivot], copie[max]);
-            swap(id[pivot], id[max]);
-        }
+        
+        swap(copie[pivot], copie[max]);
+        swap(id[pivot], id[max]);
 
         for (int i = 0; i < n; i++)
         {
             if (i == pivot)
                 continue;
 
+            T multCopie = copie[i][j];
+
             for (int k = 0; k < m; ++k)
             {
-                copie[i][k] -= (copie[pivot][k] * copie[i][j]);
-                id[i][k] -= (id[pivot][k] * id[i][j]);
+                copie[i][k] -= (copie[pivot][k] * multCopie);
+                id[i][k] -= (id[pivot][k] * multCopie);
             }
         }
     }
@@ -118,7 +95,7 @@ int main(void)
    m1 = a1;
    resAttendu = a2;
 
-   math::Matrix<float, 3, 3> res = inverse_determinant(m1);
+   math::Matrix<float, 3, 3> res = inverse_gauss(m1);
 
    if (! (res == resAttendu))
     cout << res;
