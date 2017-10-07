@@ -1,7 +1,7 @@
 #include <iostream>
 #include <TestCaller.h>
 #include <TestResult.h>
-#include <TestResultCorrector.h>
+#include <TestResultCollector.h>
 #include <ui/text/TestRunner.h>
 
 #include "MatrixTest.hpp"
