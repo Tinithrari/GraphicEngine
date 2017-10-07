@@ -336,8 +336,7 @@ namespace math
         return out;
     }
 
-    class Mat44r : Matrix<float, 4, 4>
-    {};
+    using Mat44r = Matrix<real, 4, 4>;
 
     static const Matrix<int, 4, 4> Identity4i({{1,0,0,0}, {0,1,0,0}, {0,0,1,0}, {0,0,0,1}});
     static const Matrix<float, 4, 4> Identity4r({{1,0,0,0}, {0,1,0,0}, {0,0,1,0}, {0,0,0,1}});
