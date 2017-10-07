@@ -217,15 +217,16 @@ namespace math
             }
         }
 
-        Matrix operator*(const Vector<T, m> &v) const
+        Matrix<T, n, 1> operator*(const Vector<T, m> &v) const
         {
-            Matrix res;
-
+            Matrix<T, n, 1> res;
+             
             for (int i = 0; i < n; ++i)
             {
+                res[i][0] = 0;
                 for (int j = 0; j < m; ++j)
                 {
-                        res[i][j] = mat[i][j] * v[j];
+                    res[i][0] += mat[i][j] * v[j];
                 }
             }
             return res;
@@ -263,20 +264,6 @@ namespace math
             }
             
             return res;
-        }
-
-        Matrix operator*=(const Vector<T, n> &v)
-        {
-            Matrix res;
-            for (int i = 0; i < n; ++i)
-            {
-                for (int j = 0; j < m; ++j)
-                {
-                        res[i][j] *= v[j];
-                }
-            }
-
-            return (*this);
         }
 
         Matrix operator*=(const float scalar)

@@ -20,5 +20,4 @@ public:
     void testMulWithVector();
     void testMulWithMatrix();
     void testDirMulWithScalar();
-    void testDirMulWithVector();
 };
