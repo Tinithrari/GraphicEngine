@@ -4,6 +4,7 @@
 
 #include <array>
 #include <exception>
+#include <cmath>
 #include <iostream>
 
 using namespace std;
@@ -20,9 +21,11 @@ namespace math
             return false;
         }
 
-        Matrix<T, n, n> identite()
+        Matrix identite() const
         {
-            math::Matrix<T, n, n> id;
+            if (n != m)
+                throw "La matrice n'est pas carre";
+            Matrix id;
         
             for (int i = 0; i < n; ++i)
             {
@@ -41,7 +44,7 @@ namespace math
             {
                 for (int j = 0; j < m; j++)
                 {
-                    mat[i][j] = NAN;
+                    mat[i][j] = T();
                 }
             }
         }
@@ -84,10 +87,10 @@ namespace math
         {
 
             if (n != m)
-            throw "La matrice n'est pas carré";
+                throw "La matrice n'est pas carré";
     
-            Matrix<T, n, n> id = identite();
-            Matrix<T, n, m> copie = *this;
+            Matrix id(identite());
+            Matrix copie = *this;
             int pivot = -1;
         
             for (int j = 0; j < m; ++j)
@@ -137,7 +140,7 @@ namespace math
             {
                 for (int j = 0; j < m; ++j)
                 {
-                    if (isNan(mat[i][j]))
+                    if (isnan(mat[i][j]))
                         return true;
                 }
             }

@@ -1,6 +1,6 @@
 #pragma once
-#include <TestCase.h>
 #include <TestFixture.h>
+#include <TestSuite.h>
 
 using namespace CppUnit;
 
@@ -20,4 +20,5 @@ public:
     void testMulWithVector();
     void testMulWithMatrix();
     void testDirMulWithScalar();
+    static TestSuite *suite();
 };

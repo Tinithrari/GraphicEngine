@@ -3,6 +3,12 @@ test-vector:
   tags:
     - c++
 
+test-matrix:
+  script: "make tests; ./bin/MatrixTest"
+  tags:
+    - c++
+    - cppunit
+
 quality:
   script: "sonar-scanner"
   tags:

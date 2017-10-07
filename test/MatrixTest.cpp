@@ -1,9 +1,14 @@
-#include "MatrixTest.hpp"
+#include <iostream>
+#include <TestCaller.h>
+#include <TestResult.h>
+#include <ui/text/TestRunner.h>
 
+#include "MatrixTest.hpp"
 #include "math/Vector.hpp"
 #include "math/Matrix.hpp"
 
 using namespace math;
+using namespace std;
 
 void MatrixTest::testAddition()
 {
@@ -58,11 +63,11 @@ void MatrixTest::testDirAddition()
 void MatrixTest::testDirMulWithScalar()
 {
     Mat44r matrice {{1, 1, 1, 1}, {1, 1, 1, 1}, {1, 1, 1, 1}, {1, 1, 1, 1}};
-    Mat44r expected {{1, 0, 0, 0}, {0, 1, 0, 0}, {0, 0, 1, 0}, {0, 0, 0, 1}};
+    Mat44r expected {{2, 2, 2, 2}, {2, 2, 2, 2}, {2, 2, 2, 2}, {2, 2, 2, 2}};
     
-    matrice *= Identity4r;
+    matrice *= 2;
 
-    CPPUNIT_ASSERT(expected, matrice);
+    CPPUNIT_ASSERT_EQUAL(expected, matrice);
 }
 
 void MatrixTest::testInverse()
@@ -74,7 +79,7 @@ void MatrixTest::testIsNull()
 {
     Mat44r m1;
     
-    CPPUNIT_ASSERT(m1.is_null);
+    CPPUNIT_ASSERT(m1.is_null());
     CPPUNIT_ASSERT(! (Identity4i.is_null()));
 }
 
@@ -123,4 +128,36 @@ void MatrixTest::testTranspose()
     Matrix<int, 3, 3> expected {{0, 1, 0}, {1, 0, 0}, {0, 0, 1}};
 
     CPPUNIT_ASSERT_EQUAL(expected, matrice.transpose());
+}
+
+TestSuite *MatrixTest::suite()
+{
+    TestSuite *suit = new TestSuite();
+    suit->addTest(new TestCaller<MatrixTest>("testAddition", &MatrixTest::testAddition));
+    suit->addTest(new TestCaller<MatrixTest>("testInverse", &MatrixTest::testInverse));
+    suit->addTest(new TestCaller<MatrixTest>("testAt", &MatrixTest::testAt));
+    suit->addTest(new TestCaller<MatrixTest>("testDirAccessor", &MatrixTest::testDirAccessor));
+    suit->addTest(new TestCaller<MatrixTest>("testDirAddition", &MatrixTest::testDirAddition));
+    suit->addTest(new TestCaller<MatrixTest>("testDirMulWithScalar", &MatrixTest::testDirMulWithScalar));
+    suit->addTest(new TestCaller<MatrixTest>("testIsNull", &MatrixTest::testIsNull));
+    suit->addTest(new TestCaller<MatrixTest>("testIsOrtho", &MatrixTest::testIsOrtho));
+    suit->addTest(new TestCaller<MatrixTest>("testMultWithScalar", &MatrixTest::testMultWithScalar));
+    suit->addTest(new TestCaller<MatrixTest>("testMulWithMatrix", &MatrixTest::testMulWithMatrix));
+    suit->addTest(new TestCaller<MatrixTest>("testMulWithVector", &MatrixTest::testMulWithVector));
+    suit->addTest(new TestCaller<MatrixTest>("testOutStreamOperator", &MatrixTest::testOutStreamOperator));
+    suit->addTest(new TestCaller<MatrixTest>("testTranspose", &MatrixTest::testTranspose));
+
+    return suit;
+}
+
+int main(void)
+{
+    TestSuite *suite = MatrixTest::suite();
+    TextUi::TestRunner runner;
+    
+    runner.addTest(suite);
+
+    runner.run();
+
+    return 0;
 }
