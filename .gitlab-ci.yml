@@ -1,0 +1,4 @@
+test-vector:
+  script: "make tests; ./bin/test_libmatrix"
+  tags:
+    - c++
