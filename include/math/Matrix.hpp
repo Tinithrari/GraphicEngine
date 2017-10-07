@@ -6,10 +6,6 @@
 #include <exception>
 #include <iostream>
 
-#ifndef REAL_TYPE
-typedef float real;
-#endif
-
 using namespace std;
 
 namespace math

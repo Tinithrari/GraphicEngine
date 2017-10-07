@@ -2,10 +2,10 @@
 #include <array>
 #include <cmath>
 #include <iostream>
+#define ROUND(x) round((x) * 10000) / 10000
 
-#ifndef REAL_TYPE
-typedef float real;
-#endif
+using real = float;
+
 
 using namespace std;
 
@@ -52,9 +52,9 @@ namespace math
       if (size < MIN_ARGS_CROSS)
         throw "The vector must have at least three arguments";
 
-      res[0] = (vec[1] * v[2]) - (vec[2] * v[1]);
-      res[1] = (vec[2] * v[0]) - (vec[0] * v[2]);
-      res[2] = (vec[0] * v[1]) - (vec[1] * v[0]);
+      res[0] = ROUND((vec[1] * v[2]) - (vec[2] * v[1]));
+      res[1] = ROUND((vec[2] * v[0]) - (vec[0] * v[2]));
+      res[2] = ROUND((vec[0] * v[1]) - (vec[1] * v[0]));
 
       return res;
     }
@@ -79,12 +79,7 @@ namespace math
 
     float norm() const
     {
-      float somme = 0;
-
-      for (int i = 0; i < size; ++i)
-      {
-        somme += (vec[i] * vec[i]);
-      }
+      float somme = dot(*this, *this);
       return sqrt(somme);
     }
 
@@ -92,7 +87,7 @@ namespace math
     {
       Vector<T, size> v;
       for (int i = 0; i < size; i++)
-        v.vec[i] = ((1 / norm()) * (vec[i]));
+        v.vec[i] = ROUND((1 / norm()) * (vec[i]));
     }
 
     T operator[](int i) const
@@ -127,7 +122,7 @@ namespace math
 
       for (int i = 0; i < size; ++i)
       {
-        result[i] = this->at(i) + v[i];
+        result[i] = ROUND(this->at(i) + v[i]);
       }
 
       return result;
@@ -137,7 +132,7 @@ namespace math
     {
       for (int i = 0; i < size; ++i)
       {
-        vec[i] = vec[i] + v[i];
+        vec[i] = ROUND(vec[i] + v[i]);
       }
 
       return (*this);
@@ -158,7 +153,7 @@ namespace math
       Vector<T, size> res;
 
       for (int i = 0; i < size; ++i)
-        res[i] = vec[i] - v[i];
+        res[i] =  ROUND(vec[i] - v[i]);
 
       return res;
     }
@@ -166,7 +161,7 @@ namespace math
     Vector &operator-=(Vector &v)
     {
       for (int i = 0; i < size; ++i)
-        vec[i] = vec[i] - v[i];
+        vec[i] = ROUND(vec[i] - v[i]);
 
       return (*this);
     }
@@ -177,7 +172,7 @@ namespace math
 
       for (int i = 0; i < size; ++i)
       {
-        v[i] = vec[i] * scalar;
+        v[i] = ROUND(vec[i] * scalar);
       }
 
       return v;
@@ -189,7 +184,7 @@ namespace math
 
       for (int i = 0; i < size; ++i)
       {
-        somme += vec[i] * v[i];
+        somme += ROUND(vec[i] * v[i]);
       }
 
       return somme;
@@ -197,7 +192,7 @@ namespace math
 
     friend Vector operator*(float scalar, Vector &v2)
     {
-      return v2 * scalar;
+      return ROUND(v2 * scalar);
     }
   };
   
@@ -223,9 +218,9 @@ namespace math
     if (size < MIN_ARGS_CROSS)
       throw "The vector must have at least three arguments";
 
-    res[0] = (v1[1] * v2[2]) - (v1[2] * v2[1]);
-    res[1] = (v1[2] * v2[0]) - (v1[0] * v2[2]);
-    res[2] = (v1[0] * v2[1]) - (v1[1] * v2[0]);
+    res[0] = ROUND((v1[1] * v2[2]) - (v1[2] * v2[1]));
+    res[1] = ROUND((v1[2] * v2[0]) - (v1[0] * v2[2]));
+    res[2] = ROUND((v1[0] * v2[1]) - (v1[1] * v2[0]));
 
     return res;
   }
@@ -237,20 +232,20 @@ namespace math
 
     for (int i = 0; i < size; ++i)
     {
-      v[i] = vec[i] * scalar;
+      v[i] = ROUND(vec[i] * scalar);
     }
 
     return v;
   }
 
   template<class T, unsigned int size>
-  T dot(Vector<T, size> &vec, Vector<T, size> &v)
+  T dot(const Vector<T, size> &vec, const Vector<T, size> &v)
   {
     T somme = 0;
 
     for (int i = 0; i < size; ++i)
     {
-      somme += vec[i] * v[i];
+      somme += ROUND(vec[i] * v[i]);
     }
 
     return somme;
@@ -262,33 +257,10 @@ namespace math
     return v2 * scalar;
   }
 
-  class Vec2i : public Vector<int, 2>
-  {
-    using Vector::Vector;
-  };
-  
-  class Vec3i : public Vector<int, 3>
-  {
-    using Vector::Vector;
-  };
-
-  class Vec4i : public Vector<int, 4>
-  {
-    using Vector::Vector;
-  };
-
-  class Vec2r : public Vector<float, 2>
-  {
-    using Vector::Vector;
-  };
-
-  class Vec3r : public Vector<float, 3>
-  {
-    using Vector::Vector;
-  };
-
-  class Vec4r : public Vector<float, 4>
-  {
-    using Vector::Vector;
-  };
+  using Vec2i = Vector<int, 2>;
+  using Vec3i = Vector<int, 3>;
+  using Vec4i = Vector<int, 4>;
+  using Vec2r = Vector<real, 2>;
+  using Vec3r = Vector<real, 3>;
+  using Vec4r = Vector<real, 4>;
 }
