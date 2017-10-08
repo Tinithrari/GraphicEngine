@@ -16,12 +16,7 @@ namespace math
     {
     private:
         array<array<T, m>, n> mat;
-        /*
-        bool isReversable() const
-        {
-            return false;
-        }
-        */
+
     public:
         Matrix() 
         {
