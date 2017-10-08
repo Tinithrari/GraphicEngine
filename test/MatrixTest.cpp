@@ -73,12 +73,16 @@ void MatrixTest::testDirMulWithScalar()
 
 void MatrixTest::testInverse()
 {
+    Matrix<int, 3, 3> matrix {{2, -1, 0}, {-1, 2, -1}, {0, -1, 2}};
+    Matrix<float, 3, 3> expected {{3.0f/4, 1.0f/2, 1.0f/4}, {1.0f/2, 1.0f, 1.0f/2}, {1.0f/4, 1.0f/2, 3.0f/4}};
+    Matrix<float, 3, 3> result = matrix.inverse();
 
+    CPPUNIT_ASSERT_EQUAL(expected, result);
 }
 
 void MatrixTest::testIsNull()
 {
-    Mat44r m1;
+    Matrix<float, 2, 2> m1 {{NAN, 0}, {0, 0}};
     
     CPPUNIT_ASSERT(m1.is_null());
     CPPUNIT_ASSERT(! (Identity4i.is_null()));
@@ -126,7 +130,7 @@ void MatrixTest::testOutStreamOperator()
 void MatrixTest::testTranspose()
 {
     Matrix<int, 3, 3> matrice {{0, 1, 0}, {0, 0, 1}, {1, 0, 0}};
-    Matrix<int, 3, 3> expected {{0, 1, 0}, {1, 0, 0}, {0, 0, 1}};
+    Matrix<int, 3, 3> expected {{0, 0, 1}, {1, 0, 0}, {0, 1, 0}};
 
     CPPUNIT_ASSERT_EQUAL(expected, matrice.transpose());
 }

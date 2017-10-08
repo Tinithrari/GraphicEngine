@@ -2,7 +2,7 @@
 #include <array>
 #include <cmath>
 #include <iostream>
-#define ROUND(x) round((x) * 10000) / 10000
+#define ROUND(x) (round((x) * 100) / 100)
 
 using real = float;
 

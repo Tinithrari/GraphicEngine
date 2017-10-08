@@ -16,33 +16,21 @@ namespace math
     {
     private:
         array<array<T, m>, n> mat;
+        /*
         bool isReversable() const
         {
             return false;
         }
-
-        Matrix identite() const
-        {
-            if (n != m)
-                throw "La matrice n'est pas carre";
-            Matrix id;
-        
-            for (int i = 0; i < n; ++i)
-            {
-                id[i][i] = 1;
-            }
-        
-            return id;
-        }
+        */
     public:
         Matrix() 
         {
             if (n == 0 || m == 0)
                 throw "Incorrect size";
             
-            for (int i = 0; i < n; i++ )
+            for (int i = 0; i < n; ++i )
             {
-                for (int j = 0; j < m; j++)
+                for (int j = 0; j < m; ++j)
                 {
                     mat[i][j] = T();
                 }
@@ -83,54 +71,88 @@ namespace math
             return mat[i][j];
         }
 
-        Matrix reverse() const
+        Matrix<float, n, m> inverse() const
         {
 
             if (n != m)
                 throw "La matrice n'est pas carré";
     
-            Matrix id(identite());
-            Matrix copie = *this;
-            int pivot = -1;
+            Matrix<float, n, m> copie;
+            Matrix<float, n, m> id(copie.identite());
+
+            for (int i = 0; i < n; ++i)
+                for (int j = 0; j < m; ++j)
+                    copie[i][j] = (float) (mat[i][j]);
+
+            int r = -1;
         
             for (int j = 0; j < m; ++j)
             {
-                int max = -1;
-                float diviseur;
-                for (int i = (pivot++) + 1; i < n; ++i)
+                int k = -1;
+
+                // Recherche du maximum
+                for (int i = (++r); i < n; ++i)
                 {
-                    if (copie[i][j] != 0 && abs(copie[i][j]) > abs(copie[j][max]))
-                        max = j;
+                    if (k == -1 && copie[i][j] != 0)
+                        k = i;
+                    else if (k != -1 && abs(copie[i][j]) > abs(copie[k][j]))
+                        k = i;
                 }
-        
-                if (max == -1)
-                    throw "Matrix not reversable";
-        
-                diviseur = (float) (1 / copie[max][j]);
+
+                if (k == -1)
+                    throw "Matrix not inversible";
+
+                float mkj = copie[k][j];
+
+                // Division de la ligne k par M(k,j)
                 for (int i = 0; i < m; ++i)
                 {
-                    copie[max][i] *= diviseur;
-                    id[max][i] *= diviseur;
+                    copie[k][i] /= mkj;
+                    id[k][i] /= mkj;
                 }
                 
-                swap(copie[pivot], copie[max]);
-                swap(id[pivot], id[max]);
-        
-                for (int i = 0; i < n; i++)
+                // Echange des lignes si nécessaire
+                if (k != r)
                 {
-                    if (i == pivot)
-                        continue;
-        
-                    T multCopie = copie[i][j];
-        
-                    for (int k = 0; k < m; ++k)
+                    swap(copie[k], copie[r]);
+                    swap(id[k], id[r]);
+                }
+
+                // Simplification des autres lignes
+                for (int i = 0; i < n; ++i)
+                {
+                    const float mij = copie[i][j];
+                    // Pour éviter un traitement inutile
+                    if (i != r)
                     {
-                        copie[i][k] -= (copie[pivot][k] * multCopie);
-                        id[i][k] -= (id[pivot][k] * multCopie);
+                        // Soustraction de la ligne i par la ligne r multiplié par M(i,j)
+                        for (int l = 0; l < m; ++l)
+                        {
+                            copie[i][l] -= (copie[r][l] * mij);
+                            id[i][l] -= (id[r][l] * mij);
+                        }
                     }
                 }
             }
     
+            for (int i = 0; i < n; ++i)
+                for (int j = 0; j < m; ++j)
+                    id[i][j] = ROUND(id[i][j]);
+
+            return id;
+        }
+
+        Matrix identite() const
+        {
+            if (n != m)
+                throw "La matrice n'est pas carre";
+            Matrix id;
+        
+            for (int i = 0; i < n; ++i)
+            {
+                id[i][i] = 1;
+            }
+        
             return id;
         }
 
@@ -149,11 +171,11 @@ namespace math
 
         bool is_ortho() const
         {
-            Matrix rev;
+            Matrix<float, n, m> rev;
             if (n != m)
                 throw "The matrix must be squared to check if it's orthogonal";
 
-            rev = reverse();
+            rev = inverse();
 
             return rev == transpose();
         }
@@ -293,7 +315,37 @@ namespace math
 
             return true;
         }
+
+        template <class U>
+        bool operator==(const Matrix<U, n, m> &m2) const
+        {
+            for (int i = 0; i < n; ++i)
+            {
+                for (int j = 0; j < m; ++j)
+                {
+                    if (mat[i][j] != (T) m2[i][j])
+                        return false;
+                }
+            }
+
+            return true;
+        }
     };
+
+    template <class T, class U, unsigned int n, unsigned int m>
+    bool operator==(const Matrix<T, n, m> &m1, const Matrix<U, n, m> &m2)
+    {
+        for (int i = 0; i < n; ++i)
+        {
+            for (int j = 0; j < m; ++j)
+            {
+                if (m1[i][j] != (T) (m2[i][j]))
+                    return false;
+            }
+        }
+
+        return true;
+    }
 
     template<class T, unsigned int n, unsigned int m>
     Matrix<T, n, m> &operator*(float scalar, Matrix<T, n, m> &matrice)
@@ -321,7 +373,9 @@ namespace math
             {
                 out << (j != 0 ? ", " : "") << matrice[i][j];
             }
-            out << ")" << endl;
+            out << ")";
+            if (i != n - 1)
+                out << endl;
         }
         return out;
     }
