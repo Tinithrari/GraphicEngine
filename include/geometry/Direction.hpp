@@ -19,5 +19,6 @@ namespace geometry
     class Direction: Vector
     {
     public:
+        using math::Vector::Vector; /*<! Indique l'usage des constructeurs de Vector comme constructeurs de Direction */
     };
 }
