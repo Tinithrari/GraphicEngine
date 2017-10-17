@@ -7,7 +7,7 @@
  */
 namespace geometry
 {
-    template <class T, unsigned int dimension>
+    template <class T, unsigned int N>
     class Point
     {
 
