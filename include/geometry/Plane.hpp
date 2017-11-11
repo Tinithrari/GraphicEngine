@@ -1,6 +1,6 @@
 #pragma once
 
-#include "math/Vector.hpp"
+#include "Point.hpp"
 
 #define NB_POINTS_IN_PLANE 4
 #define PLANE_DIMENSION 3
@@ -16,22 +16,22 @@ namespace geometry
     class Plane<T, PLANE_DIMENSION>
     {
     private:
-        math::Point<T, PLANE_DIMENSION> points[NB_POINTS_IN_PLANE]; /*<! Points du plan */
+        Point<T, PLANE_DIMENSION> p1; /*<! Premier points du plan */
+        Point<T, PLANE_DIMENSION> p2; /*<! Deuxieme points du plan */
+        Point<T, PLANE_DIMENSION> p3; /*<! Troisieme points du plan */
+        Point<T, PLANE_DIMENSION> p4; /*<! Quatrieme points du plan */
 
     public:
         /**
-         * Constructeur par defaut 
+         * Constructeur par defaut
+         * 
+         * @param p1 Le premier point du plan
+         * @param p2 Le deuxieme point du plan
+         * @param p3 Le troisieme point du plan
+         * @param p4 Le quatrieme point du plan
          */
-        Plane()
+        Plane(Point &p1, Point &p2, Point &p3, Point &p4) : p1(p1), p2(p2), p3(p3), p4(p4)
         {
-        }
-
-        Plane(const initializer_list<T> &list)
-        {
-            for (int i = 0; i < NB_POINTS_IN_PLANE; ++i)
-            {
-                points
-            }
         }
 
         isFrontOf(Point<T, PLANE_DIMENSION> &p)
