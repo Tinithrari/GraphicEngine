@@ -2,18 +2,20 @@
 
 #include "Point.hpp"
 
+#include <iostream>
+
 #define TRIANGLE_DIMENSION 3
 
 /**
  * @namespace geometry
- * 
- * Espace de nommage contenant les objets géométriques nécessaire pour la réalisation du moteur 
+ *
+ * Espace de nommage contenant les objets géométriques nécessaire pour la réalisation du moteur
  */
 namespace geometry
 {
     /**
      * @class Triangle
-     * 
+     *
      * Représentation d'un triangle dans un espace 3D
      */
     template <class T>
@@ -23,9 +25,9 @@ namespace geometry
         Point<T, TRIANGLE_DIMENSION> p0; /*<! Premier point du triangle */
         Point<T, TRIANGLE_DIMENSION> p1; /*<! Deuxieme point du triangle */
         Point<T, TRIANGLE_DIMENSION> p2; /*<! Troisieme point du triangle */
-    
+
     public:
-    
+
         /**
          * Construit un triangle a partir de trois points
          * @param p1 Le premier point du triangle
@@ -80,5 +82,14 @@ namespace geometry
         {
             return p2;
         }
+
+        friend std::ostream& operator<<(std::ostream& out, Triangle& t);
     };
+
+    template<class T>
+    std::ostream& operator<<(std::ostream& out, Triangle<T>& t)
+    {
+        out << "P0 : " << t.p0 << " P1 : " << t.p1 << " P2 : " << t.p2;
+        return out;
+    }
 }

@@ -3,18 +3,20 @@
 #include "Point.hpp"
 #include "math/Vector.hpp"
 
+#include <iostream>
+
 #define RECTANGLE_DIMENSION 2
 
 /**
  * @namespace geometry
- * 
- * Espace de nommage contenant les objets géométriques nécessaire pour la réalisation du moteur 
+ *
+ * Espace de nommage contenant les objets géométriques nécessaire pour la réalisation du moteur
  */
 namespace geometry
 {
     /**
      * @class Rectangle
-     * 
+     *
      * Définit un rectangle dans un espace 2D
      */
     template <class T>
@@ -43,5 +45,14 @@ namespace geometry
         {
             return origin.is_null() || length.is_null();
         }
+
+        friend std::ostream& operator<<(std::ostream& out, Rectangle &r);
     };
+
+    template<class T>
+    std::ostream& operator<<(std::ostream& out, Rectangle<T> &r)
+    {
+        out << "Origine : " << r.origin << " Length : " << r.length;
+        return out;
+    }
 }
