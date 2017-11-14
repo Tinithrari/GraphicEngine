@@ -19,6 +19,6 @@ namespace geometry
     class Direction : math::Vector<T, N>
     {
     public:
-        using math::Vector::Vector; /*<! Indique l'usage des constructeurs de Vector comme constructeurs de Direction */
+        using math::Vector::Vector<T, N>; /*<! Indique l'usage des constructeurs de Vector comme constructeurs de Direction */
     };
 }
