@@ -18,14 +18,14 @@ namespace geometry
     class Point : math::Vector<T, N>
     {
     public:
-        using math::Vector::Vector; // Usage des constructeurs de la base class
+        using math::Vector<T, N>::Vector; // Usage des constructeurs de la base class
 
         /** \brief
          *
          * \param q Le quaternion utilisé pour la la rotation du point
          * \return Point
          */
-        Point rotate(Quaternion& q)
+        Point rotate(Quaternion<T>& q)
         {
             Point<T, QUATERNION_DIMENSION> p(at(0), at(1), at(2), 1);
 
@@ -49,7 +49,7 @@ namespace geometry
             return dir;
         }
 
-        friend std::ostream& operator<<(std::ostream &out, Point &p);
+        friend std::ostream& operator<<(std::ostream &out, Point<T, N> &p);
     };
 
     template <class T, unsigned int N>
