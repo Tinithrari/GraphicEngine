@@ -25,7 +25,7 @@ namespace geometry
         /** \brief Constructeur par défaut
          *
          */
-        Sphere() center(), radius(0)
+        Sphere() : center(), radius(0)
         {
 
         }
@@ -36,7 +36,7 @@ namespace geometry
          * \param radius le rayon de la sphere
          * \return Sphere(Point &center, float radius):
          */
-        Sphere(Point &center, float radius) : center(center)
+        Sphere(Point<T, SPHERE_DIMENSION> &center, float radius) : center(center)
         {
             if (radius < 0)
                 throw std::invalid_argument("The radius must be postive");
@@ -59,7 +59,7 @@ namespace geometry
          * \param p Le point à verifier
          * \return true si le point est dans la sphere, false sinon
          */
-        bool contains(Point &p)
+        bool contains(Point<T, SPHERE_DIMENSION> &p)
         {
             return (p[0] >= center[0] - radius && p[0] <= center[0] + radius) && (p[1] >= center[1] - radius && p[1] <= center[1] + radius) && (p[2] >= center[2] - radius && p[2] <= center[2] + radius);
         }
@@ -77,18 +77,37 @@ namespace geometry
          *
          * \return Le centre de la sphere
          */
-        Point<T, SPHERE_DIMENSION> getCenter()
+        Point<T, SPHERE_DIMENSION> getCenter() const
         {
             return center;
+        }
+
+
+        /** \brief Accesseur pour le centre de la sphere
+         *
+         * \return Le centre de la sphere
+         */
+        void setCenter(Point<T, SPHERE_DIMENSION> &p)
+        {
+            center = p;
         }
 
         /** \brief Accesseur pour le rayon de la sphere
          *
          * \return Le rayon de la sphere
          */
-        float getRadius()
+        float getRadius() const
         {
             return radius;
+        }
+
+        /** \brief Accesseur pour le rayon de la sphere
+         *
+         * \return Le rayon de la sphere
+         */
+        void setRadius(float r)
+        {
+            radius = r;
         }
     };
 
