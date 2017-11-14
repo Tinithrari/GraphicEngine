@@ -9,6 +9,12 @@ test-matrix:
     - c++
     - cppunit
 
+test-scene:
+  script: "make tests && ./bin/Object3DTest"
+  tags:
+    - c++
+    - cppunit
+
 quality:
   script: "sonar-scanner"
   tags:
