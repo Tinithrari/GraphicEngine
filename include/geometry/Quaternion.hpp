@@ -1,7 +1,7 @@
 #pragma once
 
 #include "math/Vector.hpp"
-#include "Direction.hpp"
+#include "geometry/Direction.hpp"
 
 #include <cmath>
 #include <iostream>

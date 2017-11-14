@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Point.hpp"
+#include "geometry/Point.hpp"
 
 #include <iostream>
 

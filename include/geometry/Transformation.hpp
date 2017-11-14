@@ -1,8 +1,8 @@
 #pragma once
 
 #include "math/Matrix.hpp"
-#include "Quaternion.hpp"
-#include "Direction.hpp"
+#include "geometry/Quaternion.hpp"
+#include "geometry/Direction.hpp"
 
 #define TRANSFORMATION_DIMENSION 4
 

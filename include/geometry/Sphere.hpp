@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Point.hpp"
-#include "Plane.hpp"
+#include "geometry/Point.hpp"
+#include "geometry/Plane.hpp"
 
 #include <stdexcept>
 #include <iostream>

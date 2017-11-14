@@ -1,8 +1,8 @@
 #pragma once
 
 #include "math/Vector.hpp"
-#include "Point.hpp"
-#include "Direction.hpp"
+#include "geometry/Point.hpp"
+#include "geometry/Direction.hpp"
 
 #include <stdexcept>
 #include <iostream>

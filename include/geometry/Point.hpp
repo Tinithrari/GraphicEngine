@@ -1,9 +1,9 @@
 #pragma once
 
 #include "math/Vector.hpp"
-#include "Plane.hpp"
-#include "Quaternion.hpp"
-#include "Direction.hpp"
+#include "geometry/Plane.hpp"
+#include "geometry/Quaternion.hpp"
+#include "geometry/Direction.hpp"
 
 #include <iostream>
 
