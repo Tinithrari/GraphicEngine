@@ -9,6 +9,7 @@
 #include <TestFixture.h>
 #include <TestSuite.h>
 #include <stdexcept>
+#include <iostream>
 
 using namespace CppUnit;
 
@@ -38,8 +39,8 @@ public:
 
         try {
             o.face(1);
-            CPP_UNIT_FAIL("An illegal_argument exception must be launched");
-        } catch (std::illegal_argument &e) {
+            CPPUNIT_FAIL("An illegal_argument exception must be launched");
+        } catch (std::invalid_argument &e) {
         }
     }
 
@@ -66,11 +67,11 @@ public:
 
         scene::Object3D o{points};
 
-        CPPUNIT_ASSERT_EQUAL(0, o.num_faces());
+        CPPUNIT_ASSERT_EQUAL(0u, o.num_faces());
 
         o.add_face(0, 1, 2);
 
-        CPPUNIT_ASSERT_EQUAL(1, o.num_faces);
+        CPPUNIT_ASSERT_EQUAL(1u, o.num_faces());
     }
 
     /** \brief Test de suppression de sommet
@@ -85,12 +86,12 @@ public:
 
         o.remove_face(0);
 
-        CPPUNIT_ASSERT_EQUAL(0, o.num_faces());
+        CPPUNIT_ASSERT_EQUAL(0u, o.num_faces());
 
         try {
             o.remove_face(0);
             CPPUNIT_FAIL("An illegal_argument exception must be launched when the index is incorrect");
-        } catch (std::illegal_argument &e) {
+        } catch (std::invalid_argument &e) {
         }
     }
 
@@ -106,5 +107,7 @@ public:
         suit->addTest(new TestCaller<Object3DTest>("testAddFace", &Object3DTest::testAddFace));
         suit->addTest(new TestCaller<Object3DTest>("testRemoveFace", &Object3DTest::testRemoveFace));
         suit->addTest(new TestCaller<Object3DTest>("testNumFace", &Object3DTest::testNumFace));
+
+        return suit;
     }
 };

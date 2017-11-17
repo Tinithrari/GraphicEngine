@@ -19,7 +19,7 @@ namespace math
   protected:
     array<T, size> vec;
   public:
-    Vector() 
+    Vector()
     {
       if (size == 0)
         throw "Invalid size specified";
@@ -90,7 +90,7 @@ namespace math
         v.vec[i] = ROUND((1 / norm()) * (vec[i]));
     }
 
-    T operator[](int i) const
+    const T &operator[](int i) const
     {
         return vec[i];
     }
@@ -128,7 +128,7 @@ namespace math
       return result;
     }
 
-    Vector &operator+=(Vector &v)
+    Vector &operator+=(const Vector &v)
     {
       for (int i = 0; i < size; ++i)
       {
@@ -158,7 +158,7 @@ namespace math
       return res;
     }
 
-    Vector &operator-=(Vector &v)
+    Vector &operator-=(const Vector &v)
     {
       for (int i = 0; i < size; ++i)
         vec[i] = ROUND(vec[i] - v[i]);
@@ -166,7 +166,7 @@ namespace math
       return (*this);
     }
 
-    Vector operator*(float scalar) const
+    Vector operator*(const float scalar) const
     {
       Vector v;
 
@@ -178,7 +178,7 @@ namespace math
       return v;
     }
 
-    T operator*(Vector &v) const
+    T operator*(const Vector &v) const
     {
       T somme;
 
@@ -195,7 +195,7 @@ namespace math
       return ROUND(v2 * scalar);
     }
   };
-  
+
   template <class T, unsigned int size>
   ostream &operator<<(ostream &s, const Vector<T, size> &v)
   {
@@ -204,7 +204,7 @@ namespace math
 
     for (int i = 1; i < size; ++i)
       s << ", " << v[i];
-    
+
     s << ")";
 
     return s;

@@ -49,9 +49,9 @@ namespace geometry
          * \param p Le plan à verifier
          * \return true si la sphere est derriere le plan, false sinon
          */
-        bool behind(Plane &p)
+        bool behind(Plane<T> &p)
         {
-            return p.positionFrom(center) < 0;
+            return p.isFrontOf(p);
         }
 
         /** \brief Vérifie si un point est contenu dans la sphere
@@ -87,7 +87,7 @@ namespace geometry
          *
          * \return Le centre de la sphere
          */
-        void setCenter(Point<T, SPHERE_DIMENSION> &p)
+        void setCenter(const Point<T, SPHERE_DIMENSION> &p)
         {
             center = p;
         }

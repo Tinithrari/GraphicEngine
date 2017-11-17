@@ -25,7 +25,7 @@ namespace geometry
          * \param begin Le point de départ du segment
          * \param end Le point d'arrivée du segment
          */
-        LineSegment(begin, end) : begin(begin), end(end)
+        LineSegment(Point<T, N> begin, Point<T, N> end) : begin(begin), end(end)
         {
 
         }

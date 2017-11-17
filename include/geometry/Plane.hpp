@@ -1,6 +1,6 @@
 #pragma once
 
-#include "math/Vector.hpp"
+#include "geometry/LineSegment.hpp"
 #include "geometry/Point.hpp"
 #include "geometry/Direction.hpp"
 
@@ -23,7 +23,7 @@ namespace geometry
     private:
         Point<T, PLANE_DIMENSION> p; /**< Le point par lequelle le point passe */
         math::Vector<T, EQUATION_VECTOR_DIM> equation; /**< L'equation du plan */
-        math::Direction<T, PLANE_DIMENSION> n;
+        Direction<T, PLANE_DIMENSION> n;
     public:
 
         /** \brief Construit un plan à l'aide du point par lequel il passe et un vector normal
@@ -45,7 +45,7 @@ namespace geometry
          * \param p Le point à tester
          * \return n < 0 si le point est derriere, n = 0 si le point appartient au plan, n > 0 si le point est devant
          */
-        double positionFrom(Point<T, PLANE_DIMENSION &p)
+        double positionFrom(Point<T, PLANE_DIMENSION> &p)
         {
             return n.dot(p) + equation[3];
         }
@@ -71,17 +71,17 @@ namespace geometry
             if (coef != 0)
                 throw(std::runtime_error("This function can be only called if there is an intersection point"));
 
-            Direction<T, PLANE_DIMENSION> dir = ls.get_begin().length_to(le.get_end());
+            Direction<T, PLANE_DIMENSION> dir = ls.get_begin().length_to(ls.get_end());
             Direction<T, EQUATION_VECTOR_DIM> adaptedDir(dir[0], dir[1], dir[2], 0);
 
-            double denominateur = l.dot(adaptedDir);
+            double denominateur = equation.dot(adaptedDir);
 
             if (denominateur == 0)
                 throw (std::runtime_error("Bad state for the intersection call"));
 
             double t = coef / denominateur;
 
-            return s + (t * dir);
+            return p + (t * dir);
         }
 
         /** \brief
@@ -96,7 +96,8 @@ namespace geometry
             return equation.dot(s);
         }
 
-        friend std::ostream& operator<<(std::ostream& out, Plane &p);
+        template <class U>
+        friend std::ostream& operator<<(std::ostream& out, Plane<U> &p);
     };
 
     template<class T>

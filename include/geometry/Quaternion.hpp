@@ -36,7 +36,7 @@ namespace geometry
          *
          * \param members Les membres du quaternion (reel, im1, im2, im3)
          */
-        Quaternion(Vector<T, QUATERNION_DIMENSION> &members) : members(members)
+        Quaternion(math::Vector<T, QUATERNION_DIMENSION> &members) : members(members)
         {
 
         }
@@ -82,7 +82,9 @@ namespace geometry
          */
         math::Vector<T, IMAGINARY_PART_DIMENSION> im() const
         {
-            Vector<T, IMAGINARY_PART_DIMENSION> imag(members[1], members[2], members[3]);
+            math::Vector<T, IMAGINARY_PART_DIMENSION> imag(members[0], members[1], members[2]);
+
+            return imag;
         }
 
         /** \brief Calcul l'inverse du quaternion
@@ -211,7 +213,7 @@ namespace geometry
          * \param scalar le scalaire a diviser
          * \return  Le quaternion resultant de l'operation
          */
-        Quaterion operator/ (T scalar)
+        Quaternion operator/ (T scalar)
         {
             return Quaternion(math::Vector<T, QUATERNION_DIMENSION>(members[0] / scalar,
                                                                     members[1] / scalar,
@@ -304,24 +306,29 @@ namespace geometry
             return *this;
         }
 
-        friend Quaternion operator+(T scalar, Quaternion<T> &q);
-        friend Quaternion operator-(T scalar, Quaternion<T> &q);
-        friend std::ostream& operator<<(std::ostream &out, Quaternion<T> &q);
+        template <class U>
+        friend Quaternion<U> operator+(U scalar, Quaternion<U> &q);
+
+        template <class U>
+        friend Quaternion<U> operator-(U scalar, Quaternion<U> &q);
+
+        template <class U>
+        friend std::ostream& operator<<(std::ostream &out, Quaternion<U> &q);
     };
 
     template <class T>
-    Quaternion operator+(T scalar, Quaternion<T> &q)
+    Quaternion<T> operator+(T scalar, Quaternion<T> &q)
     {
-        return Quaternion(math::Vector<T, QUATERNION_DIMENSION>(q.members[0] + scalar,
+        return Quaternion<T>(math::Vector<T, QUATERNION_DIMENSION>(q.members[0] + scalar,
                                                                 q.members[1],
                                                                 q.members[2],
                                                                 q.members[3]));
     }
 
     template<class T>
-    Quaternion operator-(T scalar, Quaternion<T> &q)
+    Quaternion<T> operator-(T scalar, Quaternion<T> &q)
     {
-        return Quaternion(math::Vector<T, QUATERNION_DIMENSION>(q.members[0] - scalar,
+        return Quaternion<T>(math::Vector<T, QUATERNION_DIMENSION>(q.members[0] - scalar,
                                                                 q.members[1],
                                                                 q.members[2],
                                                                 q.members[3]));

@@ -8,37 +8,40 @@
 #include <vector>
 #include <algorithm>
 
+using namespace math;
+using namespace geometry;
+
 namespace scene
 {
     class Object3D
     {
     private:
         string nom; /**< Nom de l'objet */
-        math::Vector<float, 3> position; /**< Position de l'objet */
-        std::vector<geometry::Point<float, 3>> vertex; /**< Sommets de l'objet */
-        std::vector<geometry::Triangle<float>> faces; /**< Faces de l'objet */
+        Vector<float, 3> position; /**< Position de l'objet */
+        std::vector<Point<float, 3>> vertex; /**< Sommets de l'objet */
+        std::vector<Triangle<float>> faces; /**< Faces de l'objet */
 
         /** \brief Calcul une sphere de base pour l'algorithme de Ritter
          *
          * \return une sphere de base pour l'algorithme de Ritter
          */
-        Sphere sphereFromDistantPoint() const
+        Sphere<float> sphereFromDistantPoint() const
         {
-            int minx = 0, miny = 0, minz = 0, maxx = 0, maxy = 0; maxz = 0;
+            int minx = 0, miny = 0, minz = 0, maxx = 0, maxy = 0, maxz = 0;
 
             for (int i = 0; i < vertex.size(); ++i)
             {
-                if (vertex[i] < vertex[minx])
+                if (vertex[i][0] < vertex[minx][0])
                     minx = i;
-                if (vertex[i] < vertex[miny])
+                if (vertex[i][1] < vertex[miny][1])
                     miny = i;
-                if (vertex[i] < vertex[minz])
+                if (vertex[i][2] < vertex[minz][2])
                     minz = i;
-                if (vertex[i] > vertex[maxx])
+                if (vertex[i][0] > vertex[maxx][0])
                     maxx = i;
-                if (vertex[i] > vertex[maxy])
+                if (vertex[i][1] > vertex[maxy][1])
                     maxy = i;
-                if (vertex[i] > vertex[maxz])
+                if (vertex[i][2] > vertex[maxz][2])
                     maxz = i;
             }
 
@@ -60,20 +63,20 @@ namespace scene
                 max = maxz;
             }
 
-            geometry::Point<float, 3> center{ (vertex[min] + vertex[max]) * 0.5f };
-            geometry::Sphere<float> s{ center, std::sqrt( dot( pt[max] - center, pt[max] - center ) ) }
+            Point<float, 3> center((vertex[min] + vertex[max]) * 0.5f);
+            return Sphere<float>( center, std::sqrt( dot( vertex[max] - center, vertex[max] - center ) ) );
         }
 
         /** \brief Agrandit la sphere de collision afin qu'elle englobe la totalité des points de l'objet
          *
          * \param s Sphere& La sphere a agrandir
          */
-        void growSphere(Sphere &s)
+        void growSphere(Sphere<float> &s) const
         {
-            for (int i = 0; i < n; ++i)
+            for (int i = 0; i < vertex.size(); ++i)
             {
                 math::Vector<float, 3> vec = vertex[i] - s.getCenter();
-                float dist2 = dot(d, d);
+                float dist2 = dot(vec, vec);
 
                 if (dist2 > s.getRadius() * s.getRadius())
                 {
@@ -82,7 +85,7 @@ namespace scene
                     float k = (newRadius - s.getRadius()) / dist;
 
                     s.setRadius(newRadius);
-                    s.setCenter(s.getCenter() (+ dist * k));
+                    s.setCenter(s.getCenter() + (vec * k));
                 }
             }
         }
@@ -94,18 +97,18 @@ namespace scene
          * \param vertex Points de l'objet
          * \return L'objet3D composé de points
          */
-        Object3D(std::vector<geometry<float, 3>> &vertex) : vertex(vertex)
+        Object3D(std::vector<Point<float, 3>> &vertex) : vertex(vertex)
         {
 
         }
 
         /** \brief Calcule la sphere englobante de l'objet en utilisant l'algorithme de Ritter
          *
-         * \return geometry::Sphere
+         * \return La sphere englobante
          */
-        geometry::Sphere bsphere() const
+        Sphere<float> bsphere() const
         {
-            Sphere s = sphereFromDistantPoint();
+            Sphere<float> s = sphereFromDistantPoint();
             growSphere(s);
             return s;
         }
@@ -115,9 +118,12 @@ namespace scene
          * \param n L'index de la face
          * \return La face correspondant à l'index
          */
-        geometry::Triangle<float, 3> face(const unsigned int n) const
+        Triangle<float> face(const unsigned int n) const
         {
-            return geometry::Triangle();
+            if (n >= faces.size())
+                throw(std::invalid_argument("index out of bound"));
+
+            return faces[n];
         }
 
         /** \brief Retourne le nombre de faces de la structure
@@ -140,9 +146,9 @@ namespace scene
             if (f1 > vertex.size() || f2 > vertex.size() || f3 > vertex.size())
                 throw(std::invalid_argument("One of the argument is out of bound"));
 
-            geometry::Triangle t{vertex[f1], vertex[f2], vertex[f3]};
+            Triangle<float> t(vertex[f1], vertex[f2], vertex[f3]);
 
-            faces.add(t);
+            faces.push_back(t);
         }
 
         /** \brief Supprime une face de l'objet
@@ -151,11 +157,11 @@ namespace scene
          */
         void remove_face(unsigned int n)
         {
-            if (n > face.size())
+            if (n >= faces.size())
                 throw(std::invalid_argument("The index is out of bounds"));
 
-            std::swap(vertex[n], vertex[vertex.size() - 1]);
-            vertex.pop_back();
+            std::swap(faces[n], faces[faces.size() - 1]);
+            faces.pop_back();
         }
     };
 }
