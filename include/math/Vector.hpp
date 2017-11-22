@@ -18,7 +18,11 @@ namespace math
   {
   protected:
     array<T, size> vec;
-  public:
+    public:
+    /**
+     * @brief Constructeur par défaut
+     * @return Le vecteur nul
+     */
     Vector()
     {
       if (size == 0)
@@ -27,6 +31,12 @@ namespace math
       for (int i = 0; i < size; ++i)
         vec[i] = T();
     }
+    
+    /**
+     * @brief Construit un vecteur avec une liste de coordonnées
+     * @param list La liste des coordonnées que doit comporter le vecteur
+     * @return Le vecteur initialisé avec les coordonnées spécifiées
+     */
     Vector(const initializer_list<T> &list)
     {
       int i = 0;
@@ -36,15 +46,34 @@ namespace math
       }
     }
 
+    /**
+     * @brief COnstructeur par recopie
+     * @param v Le vecteur à recopier
+     * @return Une copie du vecteur passé en paramètre
+     */
     Vector(const Vector &v)
     {
       for (int i = 0; i < size; ++i)
         vec[i] = v[i];
     }
 
+    /**
+     * @brief Destructeur
+     */
     ~Vector() {}
+    
+    /**
+     * @brief Accède à la coordonnées i
+     * @param i l'index de la coordonnée
+     * @return La valeur de la coordonnée à l'index i
+     */
     inline T at(const unsigned int i) const { if (i > size) throw "Index out of the vector"; return vec.at(i); }
 
+    /**
+     * @brief Produit vectoriel
+     * @param v Le vecteur à multiplier au vecteur courant
+     * @return Le vecteur résultant du produit
+     */
     Vector cross(const Vector &v) const
     {
       Vector res;
@@ -59,11 +88,20 @@ namespace math
       return res;
     }
 
+    /**
+     * @brief Vérifie si le vecteur est orthogonal à un autre
+     * @param v Le vecteur avec lequel on souhaite effectuer la verification
+     * @return true si le vecteur courant est orthongonal avec le vecteur v, false sinon
+     */
     bool is_ortho(const Vector &v) const
     {
       return ((*this) * v) == 0;
     }
 
+    /**
+     * @brief Vérifie si le vecteur comporte une valeur non valide
+     * @return  true si le vecteur comporte une valeur non valide, false sinon
+     */
     bool is_null() const
     {
       for (int i = 0; i < size; ++i)
@@ -72,17 +110,29 @@ namespace math
       return false;
     }
 
+    /**
+     * @brief Verifie si le vecteur est unitaire
+     * @return true si le vecteur est unitaire, false sinon
+     */
     bool is_unit() const
     {
       return norm() == 1;
     }
 
+    /**
+     * @brief Calcule la norme du vecteur
+     * @return La norme du vecteur
+     */
     float norm() const
     {
       float somme = dot(*this, *this);
       return sqrt(somme);
     }
 
+    /**
+     * @brief Créer un vecteur unitaire equivalent au vecteur courant
+     * @return Le vecteur courant convertit en vecteur unitaire
+     */
     Vector to_unit() const
     {
       Vector<T, size> v;
@@ -90,6 +140,11 @@ namespace math
         v.vec[i] = ROUND((1 / norm()) * (vec[i]));
     }
 
+    /**
+     * @brief Accesseur pour la composante constante i du vecteur
+     * @param i l'index de la coordonnée du vecteur
+     * @return La référence constante de la composante i du vecteur
+     */
     const T &operator[](int i) const
     {
         return vec[i];
@@ -100,6 +155,11 @@ namespace math
       return vec[i];
     }
 
+    /**
+     * @brief Verifie l'egalite du vecteur courant avec un autre vecteur
+     * @param v le vecteur avec lequel effectué la comparaison
+     * @return true si les deux vecteurs sont égaux, false sinon
+     */
     bool operator==(const Vector &v) const
     {
       for (int i = 0; i < size; ++i)
@@ -108,6 +168,11 @@ namespace math
       return true;
     }
 
+    /**
+     * @brief Verifie l'inegalite du vecteur courant avec un autre vecteur
+     * @param v le vecteur avec lequel effectue la comparaison
+     * @return true si les deux vecteurs sont inegaux, false sinon
+     */
     bool operator!=(const Vector &v) const
     {
       for (int i = 0; i < size; ++i)
@@ -116,6 +181,11 @@ namespace math
       return false;
     }
 
+    /**
+     * @brief Additionne le vecteur courant avec un autre vecteur
+     * @param v Le vecteur avec lequel effectuer la comparaison
+     * @return Le vecteur résultant de l'addition
+     */
     Vector operator+(const Vector &v) const
     {
       Vector result;
@@ -128,6 +198,10 @@ namespace math
       return result;
     }
 
+    /**
+     * @brief Additione un autre vecteur à celui-ci
+     * @param v Le vecteur a additionner au vecteur courant
+     */
     Vector &operator+=(const Vector &v)
     {
       for (int i = 0; i < size; ++i)
@@ -138,6 +212,10 @@ namespace math
       return (*this);
     }
 
+    /**
+     * @brief Calcule la negation du vecteur courant
+     * @return La negation du vecteur courant
+     */
     Vector operator-() const
     {
       Vector<T, size> res;
@@ -148,6 +226,11 @@ namespace math
       return res;
     }
 
+    /**
+     * @brief Soustrait un vecteur au vecteur courant
+     * @param v Le vecteur a soustraire au vecteur courant
+     * @return Le vecteur resultant de la soustraction
+     */
     Vector operator-(const Vector &v) const
     {
       Vector<T, size> res;
@@ -158,6 +241,10 @@ namespace math
       return res;
     }
 
+    /**
+     * @brief Soustrait directement un vecteur au vecteur courant
+     * @param v Le vecteur a soustraire au vecteur courant
+     */
     Vector &operator-=(const Vector &v)
     {
       for (int i = 0; i < size; ++i)
@@ -166,6 +253,11 @@ namespace math
       return (*this);
     }
 
+    /**
+     * @brief Produit du vecteur courant avec un scalaire
+     * @param scalar Le scalaire a multiplier au vecteur courant
+     * @return Le vecteur resultant du produit
+     */
     Vector operator*(const float scalar) const
     {
       Vector v;
@@ -178,6 +270,11 @@ namespace math
       return v;
     }
 
+    /**
+     * @brief Produit scalaire du vecteur courant avec un autre vecteur
+     * @param v Le vecteur a multiplier au vecteur courant
+     * @return Le resultat du produit scalaire
+     */
     T operator*(const Vector &v) const
     {
       T somme;
@@ -190,6 +287,9 @@ namespace math
       return somme;
     }
 
+    /**
+     * @see operator*(float scalar) 
+     */
     friend Vector operator*(float scalar, Vector &v2)
     {
       return ROUND(v2 * scalar);

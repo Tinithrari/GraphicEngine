@@ -1,19 +1,30 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_layout_file>
+	<FileVersion major="1" minor="0" />
 	<ActiveTarget name="Debug" />
+	<File name="include/geometry/Quaternion.hpp" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="11886" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="include/geometry/Point.hpp" open="0" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="3" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="528" topLine="3" />
+		</Cursor>
+	</File>
+	<File name="include/geometry/Plane.hpp" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="3" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="2897" topLine="12" />
+		</Cursor>
+	</File>
+	<File name="include/scene/Object3D.hpp" open="0" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1397" topLine="0" />
+		</Cursor>
+	</File>
 	<File name="include/geometry/LineSegment.hpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="3" zoom_2="0">
 		<Cursor>
 			<Cursor1 position="663" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="include/geometry/Triangle.hpp" open="1" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="1537" topLine="37" />
-		</Cursor>
-	</File>
-	<File name="include/math/Vector.hpp" open="0" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="1813" topLine="12" />
 		</Cursor>
 	</File>
 	<File name="test/Object3DTest.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
@@ -21,32 +32,22 @@
 			<Cursor1 position="81" topLine="0" />
 		</Cursor>
 	</File>
-	<File name="include/geometry/Plane.hpp" open="1" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="3" zoom_2="0">
+	<File name="include/MatrixTest.hpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="2897" topLine="12" />
+			<Cursor1 position="13" topLine="0" />
 		</Cursor>
 	</File>
-	<File name="include/geometry/Rectangle.hpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="include/math/Vector.hpp" open="0" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="1570" topLine="17" />
+			<Cursor1 position="1813" topLine="12" />
 		</Cursor>
 	</File>
-	<File name="include/scene/Object3D.hpp" open="1" top="1" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="include/geometry/Triangle.hpp" open="1" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="1397" topLine="36" />
+			<Cursor1 position="1537" topLine="0" />
 		</Cursor>
 	</File>
-	<File name="include/math/Matrix.hpp" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="0" topLine="251" />
-		</Cursor>
-	</File>
-	<File name="include/geometry/Point.hpp" open="1" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="3" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="528" topLine="3" />
-		</Cursor>
-	</File>
-	<File name="include/geometry/Sphere.hpp" open="1" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="2" zoom_2="0">
+	<File name="include/geometry/Sphere.hpp" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="2" zoom_2="0">
 		<Cursor>
 			<Cursor1 position="1364" topLine="3" />
 		</Cursor>
@@ -56,9 +57,19 @@
 			<Cursor1 position="460" topLine="0" />
 		</Cursor>
 	</File>
-	<File name="include/Object3DTest.hpp" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="include/TriangleTest.hpp" open="1" top="1" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="1994" topLine="46" />
+			<Cursor1 position="757" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="include/Object3DTest.hpp" open="1" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="390" topLine="12" />
+		</Cursor>
+	</File>
+	<File name="include/geometry/Rectangle.hpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1570" topLine="17" />
 		</Cursor>
 	</File>
 	<File name="test/MatrixTest.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
@@ -66,14 +77,9 @@
 			<Cursor1 position="4911" topLine="0" />
 		</Cursor>
 	</File>
-	<File name="include/MatrixTest.hpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="include/math/Matrix.hpp" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="13" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="include/geometry/Quaternion.hpp" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="11886" topLine="0" />
+			<Cursor1 position="0" topLine="251" />
 		</Cursor>
 	</File>
 </CodeBlocks_layout_file>

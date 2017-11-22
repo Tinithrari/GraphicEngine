@@ -35,6 +35,7 @@
 		</Compiler>
 		<Unit filename="include/MatrixTest.hpp" />
 		<Unit filename="include/Object3DTest.hpp" />
+		<Unit filename="include/TriangleTest.hpp" />
 		<Unit filename="include/geometry/Direction.hpp" />
 		<Unit filename="include/geometry/LineSegment.hpp" />
 		<Unit filename="include/geometry/Plane.hpp" />

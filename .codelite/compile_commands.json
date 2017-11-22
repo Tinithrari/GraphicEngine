@@ -1,0 +1,17 @@
+[{
+  "file": "/home/xavier/Documents/FMJ/om-project/src/main.cpp",
+  "directory": "/home/xavier/Documents/FMJ/om-project",
+  "command": "/usr/bin/g++ -c /home/xavier/Documents/FMJ/om-project/src/main.cpp -o /home/xavier/Documents/FMJ/om-project/src/main.cpp.o  -g  -O0  -Wall -I. -I."
+ }, {
+  "file": "/home/xavier/Documents/FMJ/om-project/test/test_libmatrix.cpp",
+  "directory": "/home/xavier/Documents/FMJ/om-project",
+  "command": "/usr/bin/g++ -c /home/xavier/Documents/FMJ/om-project/test/test_libmatrix.cpp -o /home/xavier/Documents/FMJ/om-project/test/test_libmatrix.cpp.o  -g  -O0  -Wall -I. -I."
+ }, {
+  "file": "/home/xavier/Documents/FMJ/om-project/test/Object3DTest.cpp",
+  "directory": "/home/xavier/Documents/FMJ/om-project",
+  "command": "/usr/bin/g++ -c /home/xavier/Documents/FMJ/om-project/test/Object3DTest.cpp -o /home/xavier/Documents/FMJ/om-project/test/Object3DTest.cpp.o  -g  -O0  -Wall -I. -I."
+ }, {
+  "file": "/home/xavier/Documents/FMJ/om-project/test/MatrixTest.cpp",
+  "directory": "/home/xavier/Documents/FMJ/om-project",
+  "command": "/usr/bin/g++ -c /home/xavier/Documents/FMJ/om-project/test/MatrixTest.cpp -o /home/xavier/Documents/FMJ/om-project/test/MatrixTest.cpp.o  -g  -O0  -Wall -I. -I."
+ }]
