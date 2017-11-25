@@ -9,3 +9,7 @@ tests: test/test_libmatrix.cpp test/MatrixTest.cpp
 	g++ -std=c++11 -g -I include test/test_libmatrix.cpp -o bin/test_libmatrix
 	g++ -std=c++11 -g -I include -I /usr/include/cppunit test/MatrixTest.cpp -o bin/MatrixTest -lcppunit
 	g++ -std=c++11 -g -I include -I /usr/include/cppunit test/Object3DTest.cpp -o bin/Object3DTest -lcppunit
+	g++ -std=c++11 -g -I include -I /usr/include/cppunit test/TriangleTest.cpp -o bin/TestTriangle -lcppunit
+	
+clean:
+	rm bin/*

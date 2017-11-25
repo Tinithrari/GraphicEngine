@@ -9,8 +9,14 @@ test-matrix:
     - c++
     - cppunit
 
-test-scene:
+test-object3D:
   script: "make tests && ./bin/Object3DTest"
+  tags:
+    - c++
+    - cppunit
+    
+test-triangle:
+  script: "make tests && ./bin/TriangleTest"
   tags:
     - c++
     - cppunit

@@ -123,5 +123,6 @@
     <File Name="test/test_libmatrix.cpp"/>
     <File Name="test/Object3DTest.cpp"/>
     <File Name="test/MatrixTest.cpp"/>
+    <File Name="test/TriangleTest.cpp"/>
   </VirtualDirectory>
 </CodeLite_Project>
