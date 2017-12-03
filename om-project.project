@@ -23,6 +23,8 @@
     <File Name="include/TriangleTest.hpp"/>
     <File Name="include/Object3DTest.hpp"/>
     <File Name="include/MatrixTest.hpp"/>
+    <File Name="include/PlaneTest.hpp"/>
+    <File Name="include/QuaternionTest.hpp"/>
   </VirtualDirectory>
   <Description/>
   <Dependencies/>
@@ -124,5 +126,7 @@
     <File Name="test/Object3DTest.cpp"/>
     <File Name="test/MatrixTest.cpp"/>
     <File Name="test/TriangleTest.cpp"/>
+    <File Name="test/PlaneTest.cpp"/>
+    <File Name="test/QuaternionTest.cpp"/>
   </VirtualDirectory>
 </CodeLite_Project>

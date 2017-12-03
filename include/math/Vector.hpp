@@ -138,6 +138,7 @@ namespace math
       Vector<T, size> v;
       for (int i = 0; i < size; i++)
         v.vec[i] = ROUND((1 / norm()) * (vec[i]));
+      return v;
     }
 
     /**
@@ -192,7 +193,7 @@ namespace math
 
       for (int i = 0; i < size; ++i)
       {
-        result[i] = ROUND(this->at(i) + v[i]);
+        result[i] = this->at(i) + v[i];
       }
 
       return result;
@@ -206,7 +207,7 @@ namespace math
     {
       for (int i = 0; i < size; ++i)
       {
-        vec[i] = ROUND(vec[i] + v[i]);
+        vec[i] = vec[i] + v[i];
       }
 
       return (*this);
@@ -277,11 +278,11 @@ namespace math
      */
     T operator*(const Vector &v) const
     {
-      T somme;
+      T somme = T();
 
       for (int i = 0; i < size; ++i)
       {
-        somme += ROUND(vec[i] * v[i]);
+        somme += vec[i] * v[i];
       }
 
       return somme;
@@ -292,7 +293,7 @@ namespace math
      */
     friend Vector operator*(float scalar, Vector &v2)
     {
-      return ROUND(v2 * scalar);
+      return v2 * scalar;
     }
   };
 

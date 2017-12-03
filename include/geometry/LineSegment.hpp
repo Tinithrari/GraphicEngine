@@ -29,6 +29,11 @@ namespace geometry
         {
 
         }
+        
+        LineSegment(const LineSegment& ls) : begin(ls.begin), end(ls.end)
+        {
+            
+        }
 
         /** \brief Accesseur pour le point de départ
          *

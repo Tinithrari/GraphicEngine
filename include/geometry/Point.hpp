@@ -42,7 +42,7 @@ namespace geometry
          * \param p Le point dont on veut calculer la distance par rapport à celui-ci
          * \return La direction de ce point vers celui passé en paramètre
          */
-        Direction<T, N> length_to(Point<T, N> &p) const
+        Direction<T, N> length_to(const Point<T, N> &p) const
         {
             Direction<T, N> dir;
 
