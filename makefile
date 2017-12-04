@@ -12,6 +12,7 @@ tests: test/test_libmatrix.cpp test/MatrixTest.cpp
 	g++ -std=c++11 -g -I include -I /usr/include/cppunit test/TriangleTest.cpp -o bin/TriangleTest -lcppunit
 	g++ -std=c++11 -g -I include -I /usr/include/cppunit test/PlaneTest.cpp -o bin/PlaneTest -lcppunit
 	g++ -std=c++11 -g -I include -I /usr/include/cppunit test/QuaternionTest.cpp -o bin/QuaternionTest -lcppunit
+	g++ -std=c++11 -g -I include -I /usr/include/cppunit test/TransformationTest.cpp -o bin/TransformationTest -lcppunit
 	
 clean:
 	rm bin/*

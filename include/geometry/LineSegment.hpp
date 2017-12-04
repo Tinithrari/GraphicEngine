@@ -30,6 +30,10 @@ namespace geometry
 
         }
         
+        /**
+         * @brief Constructeur par recopie
+         * @param ls
+         */
         LineSegment(const LineSegment& ls) : begin(ls.begin), end(ls.end)
         {
             
@@ -39,7 +43,7 @@ namespace geometry
          *
          * \return Le point de départ
          */
-        Point<T, N> get_begin()
+        Point<T, N> get_begin() const
         {
             return begin;
         }
@@ -48,7 +52,7 @@ namespace geometry
          *
          * \return Le point d'arrivée
          */
-        Point<T, N> get_end()
+        Point<T, N> get_end() const
         {
             return end;
         }
@@ -57,14 +61,14 @@ namespace geometry
          *
          * \return true si des données invalides sont présentes, false sinon
          */
-        bool is_null()
+        bool is_null() const
         {
             return begin.is_null() || end.is_null();
         }
     };
 
     template<class T, unsigned int N>
-    std::ostream& operator<<(std::ostream& out, LineSegment<T, N> &ls)
+    std::ostream& operator<<(std::ostream& out, const LineSegment<T, N> &ls)
     {
         out << "Begin : " << ls.get_begin() << ", end : " << ls.get_end();
     }

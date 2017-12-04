@@ -475,6 +475,18 @@ namespace math
         
         return res;
     }
+    
+    //
+    template<class T, unsigned int n, unsigned int m>
+    Vector<T, m> operator*(const Vector<T, m>& v, const Matrix<T, n, m>& mat)
+    {
+        Vector<T, m> vec;
+        for (int i = 0; i < m; ++i)
+            for (int j = 0; j < n; ++j)
+                vec[i] += v[j] * mat[j][i];
+
+        return vec;
+    }
 
     /**
      * @brief Operation d'affichage pour la matrice

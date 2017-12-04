@@ -3,6 +3,8 @@
 #include "math/Matrix.hpp"
 #include "geometry/Quaternion.hpp"
 #include "geometry/Direction.hpp"
+#include "geometry/Point.hpp"
+#include "geometry/Sphere.hpp"
 
 #define TRANSFORMATION_DIMENSION 4
 
@@ -22,31 +24,30 @@ namespace geometry
     {
     private:
         math::Matrix<T, TRANSFORMATION_DIMENSION, TRANSFORMATION_DIMENSION> transformMat; /**< Matrice de transformation */
-        Transformation() /**< Constructeur par défaut */
+        Transformation() : transformMat()/**< Constructeur par défaut */
         {
 
         }
     public:
-
         /** \brief Construit une transformation à partir d'un quaternion
          *
          * \param q Le quaternion avec lequel construire la matrice de rotation
          */
-        Transformation(Quaternion<T> &q)
+        Transformation(const Quaternion<T> &q) : transformMat()
         {
             T reel = q.re();
             math::Vector<T, IMAGINARY_PART_DIMENSION> img = q.im();
 
             transformMat[0][0] = 1 - (2 * img[1] * img[1]) - (2 * img[2] * img[2]);
-            transformMat[0][1] = (2 * img[0] * img[1]) - (2 * re * img[2]);
-            transformMat[0][2] = (2 * img[0] * img[2]) + (2 * re * img[1]);
+            transformMat[0][1] = (2 * img[0] * img[1]) - (2 * reel * img[2]);
+            transformMat[0][2] = (2 * img[0] * img[2]) + (2 * reel * img[1]);
 
-            transformMat[1][0] = (2 * img[0] * img[1]) + (2 * re * img[2]);
+            transformMat[1][0] = (2 * img[0] * img[1]) + (2 * reel * img[2]);
             transformMat[1][1] = 1 - (2 * img[0] * img[0]) - (2 * img[2] * img[2]);
-            transformMat[1][2] = (2 * img[1] * img[2]) - (2 * re * img[0]);
+            transformMat[1][2] = (2 * img[1] * img[2]) - (2 * reel * img[0]);
 
-            transformMat[2][0] = (2 * img[0] * img[2]) - (2 * re * img[1]);
-            transformMat[2][1] = (2 * img[1] * img[2]) + (2 * re * img[0]);
+            transformMat[2][0] = (2 * img[0] * img[2]) - (2 * reel * img[1]);
+            transformMat[2][1] = (2 * img[1] * img[2]) + (2 * reel * img[0]);
             transformMat[2][2] = 1 - (2 * img[0] * img[0]) - (2 * img[1] * img[1]);
 
             transformMat[3][3] = 1;
@@ -57,10 +58,10 @@ namespace geometry
          * \param d L'axe de rotation
          * \param angle L'angle de rotation
          */
-        Transformation(Direction &d, T angle)
+        Transformation(const T angle, const Direction<real, 3> &d)
         {
-            double cosAngle = cos(deg2rad(angle));
-            double sinAngle = sin(deg2rad(angle));
+            double cosAngle = ROUND(cos(deg2rad(angle)));
+            double sinAngle = ROUND(sin(deg2rad(angle)));
 
             transformMat[0][0] = cosAngle + (1 - cosAngle) * (d[0] * d[0]);
             transformMat[0][1] = (1 - cosAngle) * d[0] * d[1] + (sinAngle * d[1]);
@@ -76,13 +77,22 @@ namespace geometry
 
             transformMat[3][3] = 1;
         }
+        
+        /**
+         * @brief Constructeur avec une matrice
+         * @param transformMat La matrice a utiliser pour la transformation
+         */
+        Transformation(const math::Matrix<T, TRANSFORMATION_DIMENSION, TRANSFORMATION_DIMENSION> &transformMat) : transformMat(transformMat)
+        {
+            
+        }
 
         /** \brief Concatene deux transformations
          *
          * \param t La transformation a ajouté
          * \return Le résultat de la concaténation de transformation
          */
-        Transformation concat(Transformation &t)
+        Transformation concat(const Transformation &t) const
         {
             Transformation result;
             result.transformMat[0][0] = transformMat[0][0] + t.transformMat[0][0];
@@ -107,13 +117,13 @@ namespace geometry
          * \param p Le point à transformer
          * \return Le point résultant de la transformation
          */
-        Point transform(Point<T, 3> &p)
+        Point<T, 3> transform(const Point<T, 3> &p) const
         {
-            math::Vector<T, 4> v(p[0], p[1], p[2], 1);
+            const T last(1);
+            math::Vector<T, 4> v{p[0], p[1], p[2], last};
 
             v = v * transformMat;
-
-            return Point<T, 3>(v[0], v[1], v[2]);
+            return Point<T, 3>{v[0], v[1], v[2]};
         }
 
         /** \brief Transforme une sphère
@@ -121,12 +131,12 @@ namespace geometry
          * \param s La sphere à transformer
          * \return La sphere résultant de la transformation
          */
-        Sphere transform(Sphere<T> &s)
+        Sphere<T> transform(const Sphere<T> &s) const
         {
-            math::Point<T, SPHERE_DIMENSION> center = s.getCenter();
+            Point<T, SPHERE_DIMENSION> center = s.getCenter();
             center = transform(center);
 
-            return Sphere(center, s.getRadius());
+            return Sphere<T>(center, s.getRadius());
         }
 
         /** \brief Transforme une direction
@@ -134,13 +144,27 @@ namespace geometry
          * \param d La direction à transformer
          * \return La direction résultant de la transformation
          */
-        Direction transform(Direction<T, 3> &d)
+        Direction<T, 3> transform(Direction<T, 3> &d) const
         {
-            math::Vector<T, 4> v(d[0], d[1], d[2], 0);
+            math::Vector<T, 4> v(d[0], d[1], d[2], T());
 
             v = v * transformMat;
 
             return Direction<T, 3>(v[0], v[1], v[2]);
+        }
+        
+        /**
+         * @brief Comparaison de deux matrices
+         * @param transform La matrice a comparer avec la matrice courante
+         * @return true si les matrices sont identiques, false sinon
+         */
+        bool operator==(const Transformation& transform) const
+        {
+            for (int i = 0; i < TRANSFORMATION_DIMENSION; ++i)
+                for (int j = 0; j < TRANSFORMATION_DIMENSION; ++j)
+                    if (transformMat[i][j] != transformMat[i][j])
+                        return false;
+            return true;
         }
 
         /** \brief Créer la matrice de transformation relative à une translation
@@ -150,7 +174,7 @@ namespace geometry
          * \param z La translation à effectuer en z
          * \return La transformation équivalente à la translation mise en paramètre
          */
-        static Transformation createTranslation(T x, T y, T z)
+        static Transformation createTranslation(const T x, const T y, const T z)
         {
             Transformation t;
 
@@ -170,7 +194,7 @@ namespace geometry
          * \param z Le facteur de mise a l'echelle sur l'axe z
          * \return La transformation equivalente à la mise à l'echelle passé en parametre
          */
-        static Transformation createScaling(T x, T y, T z)
+        static Transformation createScaling(const T x, const T y, const T z)
         {
             Transformation t;
 
@@ -183,15 +207,17 @@ namespace geometry
             return t;
         }
 
-        friend std::ostream& operator<<(std::ostream& out, Transformation& t);
+        template <class U>
+        friend std::ostream& operator<<(std::ostream& out, const Transformation<U>& t);
     };
 
-    std::ostream& operator<<(std::ostream& out, Transformation& t)
+    template <class T>
+    std::ostream& operator<<(std::ostream& out, const Transformation<T>& t)
     {
         out << t.transformMat[0][0] << " " << t.transformMat[0][1] << " " << t.transformMat[0][2] << " | " << t.transformMat[0][3] << std::endl;
         out << t.transformMat[1][0] << " " << t.transformMat[1][1] << " " << t.transformMat[1][2] << " | " << t.transformMat[1][3] << std::endl;
         out << t.transformMat[2][0] << " " << t.transformMat[2][1] << " " << t.transformMat[2][2] << " | " << t.transformMat[2][3] << std::endl;
-        out << t.transformMat[3][0] << " " << t.transformMat[3][1] << " " << t.transformMat[3][2] << " | " << t.transformMat[3][3] << std::endl;
+        out << t.transformMat[3][0] << " " << t.transformMat[3][1] << " " << t.transformMat[3][2] << " | " << t.transformMat[3][3];
 
         return out;
     }

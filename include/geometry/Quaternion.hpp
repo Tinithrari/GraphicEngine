@@ -8,7 +8,7 @@
 
 #define PI 3.14159265358 /**< Valeur approché du nombre PI */
 #define RADIAN_COEFFICIENT 180 /**< Coefficient pour transformer les degrés en radiant */
-#define deg2rad(x) (((x) / RADIAN_COEFFICIENT) * PI) /**< Convertit les degrés en radiant */
+#define deg2rad(x) ((((x) * PI) / RADIAN_COEFFICIENT)) /**< Convertit les degrés en radiant */
 
 #define QUATERNION_DIMENSION 4 /**< Nombre de membre dans le quaternion */
 #define IMAGINARY_PART_DIMENSION 3 /**< Nombre de membre pour la partie imaginaire du quaternion */
@@ -49,9 +49,9 @@ namespace geometry
          */
         Quaternion(const float rotation, const Direction<T, 3> &dir)
         {
-            double sinAngle = std::sin(deg2rad(rotation / 2));
+            float sinAngle = ROUND(std::sin(deg2rad(rotation / 2)));
 
-            members[0] = std::cos(deg2rad(rotation / 2));
+            members[0] = ROUND(std::cos(deg2rad(rotation / 2)));
             members[1] = dir[0] * sinAngle;
             members[2] = dir[1] * sinAngle;
             members[3] = dir[2] * sinAngle;
