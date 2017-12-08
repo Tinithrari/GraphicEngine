@@ -17,8 +17,8 @@ namespace geometry
     class LineSegment
     {
     private:
-            Point<T, N> begin;
-            Point<T, N> end;
+        Point<T, N> begin; /**< Le point de depart du segment*/
+        Point<T, N> end; /**< Le point d'arrivee du segment*/
     public:
         /** \brief Construit un segment à partir de deux points
          *
@@ -64,6 +64,11 @@ namespace geometry
         bool is_null() const
         {
             return begin.is_null() || end.is_null();
+        }
+        
+        bool operator==(const LineSegment &ls) const
+        {
+            return begin == ls.get_begin() && end == ls.get_end();
         }
     };
 

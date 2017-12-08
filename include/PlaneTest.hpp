@@ -67,7 +67,7 @@ public:
         geometry::Plane<float> plane{p, dir};
         
         CPPUNIT_ASSERT_EQUAL(0.5d, plane.intersectCoef(intersect));
-        CPPUNIT_ASSERT_EQUAL(0.d, plane.intersectCoef(noIntersect));
+        CPPUNIT_ASSERT_EQUAL(-1.d, plane.intersectCoef(noIntersect));
     }
     
     void testIntersec()

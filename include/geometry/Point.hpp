@@ -20,6 +20,9 @@ namespace geometry
 
         using math::Vector<T, N>::Vector; // Usage des constructeurs de la base class
 
+        Point() : Point::Vector()
+        {}
+
         Point(const math::Vector<T, N> &v) : Point::Vector(v)
         {}
 

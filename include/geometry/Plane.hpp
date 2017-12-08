@@ -48,7 +48,7 @@ namespace geometry
          * \param p Le point à tester
          * \return n < 0 si le point est derriere, n = 0 si le point appartient au plan, n > 0 si le point est devant
          */
-        double positionFrom(Point<T, PLANE_DIMENSION> &pt) const
+        double positionFrom(const Point<T, PLANE_DIMENSION> &pt) const
         {
             return (n * pt) + equation[3];
         }
@@ -58,7 +58,7 @@ namespace geometry
          * \param p Le point dont on souhaite connaitre la disposition par rapport au plan
          * \return true si le plan est devant le plan, false sinon
          */
-        bool isFrontOf(Point<T, PLANE_DIMENSION> &pt) const
+        bool isFrontOf(const Point<T, PLANE_DIMENSION> &pt) const
         {
             return positionFrom(pt) < 0;
         }
@@ -68,10 +68,10 @@ namespace geometry
          * \param ls Le segement de droite
          * \return Le point d'intersection entre le plan et la droite
          */
-        Point<T, PLANE_DIMENSION> intersec(LineSegment<T, PLANE_DIMENSION> &ls) const
+        Point<T, PLANE_DIMENSION> intersec(const LineSegment<T, PLANE_DIMENSION> &ls) const
         {
             double coef = intersectCoef(ls);
-            if (coef == 0)
+            if (coef < 0)
                 throw(std::runtime_error("This function can be only called if there is an intersection point"));
             
             Point<T, EQUATION_VECTOR_DIM> s{ls.get_begin()[0], ls.get_begin()[1], ls.get_begin()[2], 1};
@@ -88,14 +88,14 @@ namespace geometry
          * \param ls LineSegment&
          * \return double
          */
-        double intersectCoef(LineSegment<T, PLANE_DIMENSION> &ls) const
+        double intersectCoef(const LineSegment<T, PLANE_DIMENSION> &ls) const
         {
             Point<T, EQUATION_VECTOR_DIM> s{ls.get_begin()[0], ls.get_begin()[1], ls.get_begin()[2], 1};
             Direction<T, PLANE_DIMENSION> vDim3{ls.get_begin().length_to(ls.get_end())};
             Direction<T, EQUATION_VECTOR_DIM> v = {vDim3[0], vDim3[1], vDim3[2], T()};
             
             if ((equation * v) == 0)
-                return (equation * s == 0 ? 1.d : 0.d);
+                return (equation * s == 0 ? 1.d : -1);
 
             return -((equation * s) / (equation * v));
         }

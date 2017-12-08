@@ -7,6 +7,7 @@
     </VirtualDirectory>
     <VirtualDirectory Name="scene">
       <File Name="include/scene/Object3D.hpp"/>
+      <File Name="include/scene/Frustum.hpp"/>
     </VirtualDirectory>
     <VirtualDirectory Name="geometry">
       <File Name="include/geometry/Sphere.hpp"/>
@@ -26,6 +27,7 @@
     <File Name="include/PlaneTest.hpp"/>
     <File Name="include/QuaternionTest.hpp"/>
     <File Name="include/TransformationTest.hpp"/>
+    <File Name="include/FrustumTest.hpp"/>
   </VirtualDirectory>
   <Description/>
   <Dependencies/>
@@ -130,5 +132,6 @@
     <File Name="test/PlaneTest.cpp"/>
     <File Name="test/QuaternionTest.cpp"/>
     <File Name="test/TransformationTest.cpp"/>
+    <File Name="test/FrustumTest.cpp"/>
   </VirtualDirectory>
 </CodeLite_Project>
