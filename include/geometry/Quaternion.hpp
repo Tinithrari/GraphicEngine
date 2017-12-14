@@ -2,6 +2,8 @@
 
 #include "math/Vector.hpp"
 #include "geometry/Direction.hpp"
+#include "geometry/Point.hpp"
+#include "geometry/Plane.hpp"
 
 #include <cmath>
 #include <iostream>
@@ -118,6 +120,43 @@ namespace geometry
         Quaternion to_norm() const
         {
             return Quaternion(members.to_unit());
+        }
+        
+        /** \brief Effectue une rotation sur un point 
+         *
+         * \param pt le point à transformer
+         * \return Le point transforme
+         */
+        Point<T, 3> rotate(const Point<T, 3> &pt) const
+        {
+            Point<T, QUATERNION_DIMENSION> p(pt->at(0), pt->at(1), pt->at(2), 1);
+
+            Point<T, QUATERNION_DIMENSION> rotatedP(p * members);
+
+            return Point(rotatedP[0], rotatedP[1], rotatedP[2]);
+        }
+        
+        /**
+         * @brief Effectue une rotation sur une direction
+         * @param d La direction a transformer
+         * @return La direction transforme
+         */
+        Direction<T, 3> rotate(const Direction<T, 3> &d) const
+        {
+            Direction<T, QUATERNION_DIMENSION> dq(d[0], d[1], d[2], 0);
+            Direction<T, QUATERNION_DIMENSION> transformed(d * members);
+            
+            return Direction<T, 3>(transformed[0], transformed[1], transformed[2]);
+        }
+        
+        /**
+         * @brief Effectue une rotation sur un plan
+         * @param p Le plan a transformer
+         * @return Le plan transforme
+         */
+        Plane<T> rotate(const Plane<T> &p) const
+        {
+            return Plane<T>(rotate(p.GetP()), rotate(p.GetN()));
         }
 
         /** \brief Additione un scalaire au quaternion

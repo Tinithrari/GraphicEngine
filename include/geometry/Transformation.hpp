@@ -154,6 +154,15 @@ namespace geometry
         }
         
         /**
+         * @brief Transforme un plan
+         * @return Le plan transforme
+         */
+        Plane<real, 3> transform(const Plane<real, 3> &p) const
+        {
+            return Plane<real, 3>(transform(p.GetP()), transform(p.GetD()));
+        }
+        
+        /**
          * @brief Comparaison de deux matrices
          * @param transform La matrice a comparer avec la matrice courante
          * @return true si les matrices sont identiques, false sinon

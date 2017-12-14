@@ -1,7 +1,6 @@
 #pragma once
 
 #include "math/Vector.hpp"
-#include "geometry/Quaternion.hpp"
 #include "geometry/Direction.hpp"
 
 #include <iostream>
@@ -25,20 +24,6 @@ namespace geometry
 
         Point(const math::Vector<T, N> &v) : Point::Vector(v)
         {}
-
-        /** \brief
-         *
-         * \param q Le quaternion utilisé pour la la rotation du point
-         * \return Point
-         */
-        Point rotate(Quaternion<T>& q) const
-        {
-            Point<T, QUATERNION_DIMENSION> p(this->at(0), this->at(1), this->at(2), 1);
-
-            Point<T, QUATERNION_DIMENSION> rotatedP(p * q.getMembers());
-
-            return Point(rotatedP[0], rotatedP[1], rotatedP[2]);
-        }
 
         /** \brief Calcule la distance entre ce point et un autre
          *

@@ -8,6 +8,8 @@
     <VirtualDirectory Name="scene">
       <File Name="include/scene/Object3D.hpp"/>
       <File Name="include/scene/Frustum.hpp"/>
+      <File Name="include/scene/Camera.hpp"/>
+      <File Name="include/scene/Scene.hpp"/>
     </VirtualDirectory>
     <VirtualDirectory Name="geometry">
       <File Name="include/geometry/Sphere.hpp"/>
