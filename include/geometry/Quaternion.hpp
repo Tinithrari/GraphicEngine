@@ -133,7 +133,7 @@ namespace geometry
 
             Point<T, QUATERNION_DIMENSION> rotatedP(p * members);
 
-            return Point(rotatedP[0], rotatedP[1], rotatedP[2]);
+            return Point<T, 3>{rotatedP[0], rotatedP[1], rotatedP[2]};
         }
         
         /**
@@ -143,10 +143,7 @@ namespace geometry
          */
         Direction<T, 3> rotate(const Direction<T, 3> &d) const
         {
-            Direction<T, QUATERNION_DIMENSION> dq(d[0], d[1], d[2], 0);
-            Direction<T, QUATERNION_DIMENSION> transformed(d * members);
-            
-            return Direction<T, 3>(transformed[0], transformed[1], transformed[2]);
+            return Direction<T, 3>{d[0] * members[0], d[1] * members[1], d[2] * members[2]};
         }
         
         /**

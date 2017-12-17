@@ -1,7 +1,7 @@
 all:
 	test -e build || mkdir build
 	test -e bin || mkdir bin
-	g++ -std=c++11 -I include -o bin/TestVector src/main.cpp
+	g++ -g  -std=c++11 -I include src/main.cpp -o bin/Scene3D  `sdl2-config --cflags --libs` -lSDL2_ttf
 
 tests: test/test_libmatrix.cpp test/MatrixTest.cpp
 	test -e build || mkdir build

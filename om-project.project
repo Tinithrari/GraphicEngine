@@ -9,7 +9,6 @@
       <File Name="include/scene/Object3D.hpp"/>
       <File Name="include/scene/Frustum.hpp"/>
       <File Name="include/scene/Camera.hpp"/>
-      <File Name="include/scene/Scene.hpp"/>
     </VirtualDirectory>
     <VirtualDirectory Name="geometry">
       <File Name="include/geometry/Sphere.hpp"/>
@@ -125,6 +124,8 @@
     <File Name="src/main.cpp"/>
     <File Name="src/gui.h"/>
     <File Name="src/gui_interface.h"/>
+    <File Name="src/scene_interface.h"/>
+    <File Name="src/Scene.hpp"/>
   </VirtualDirectory>
   <VirtualDirectory Name="test">
     <File Name="test/test_libmatrix.cpp"/>

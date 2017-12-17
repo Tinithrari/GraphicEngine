@@ -8,7 +8,8 @@
 #ifndef _SCENE_INTERFACE_H
 #define _SCENE_INTERFACE_H
 
-#include "libmatrix.h"
+#include "math/Vector.hpp"
+#include "math/Matrix.hpp"
 
 class SceneInterface
 {

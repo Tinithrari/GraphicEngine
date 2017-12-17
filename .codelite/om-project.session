@@ -1,39 +1,60 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Session Name="/home/xavier/Documents/FMJ/om-project/om-project.workspace">
-  <int Value="4" Name="m_selectedTab"/>
+  <int Value="0" Name="m_selectedTab"/>
   <wxString Value="/home/xavier/Documents/FMJ/om-project/om-project.workspace" Name="m_workspaceName"/>
   <TabInfoArray Name="TabInfoArray">
     <TabInfo>
       <wxString Value="/home/xavier/Documents/FMJ/om-project/include/scene/Camera.hpp" Name="FileName"/>
-      <int Value="151" Name="FirstVisibleLine"/>
-      <int Value="120" Name="CurrentLine"/>
-      <wxArrayString Name="Bookmarks"/>
-      <IntVector Name="CollapsedFolds"/>
-    </TabInfo>
-    <TabInfo>
-      <wxString Value="/home/xavier/Documents/FMJ/om-project/include/scene/Frustum.hpp" Name="FileName"/>
-      <int Value="0" Name="FirstVisibleLine"/>
-      <int Value="0" Name="CurrentLine"/>
-      <wxArrayString Name="Bookmarks"/>
-      <IntVector Name="CollapsedFolds"/>
-    </TabInfo>
-    <TabInfo>
-      <wxString Value="/home/xavier/Documents/FMJ/om-project/include/geometry/Transformation.hpp" Name="FileName"/>
-      <int Value="48" Name="FirstVisibleLine"/>
-      <int Value="0" Name="CurrentLine"/>
-      <wxArrayString Name="Bookmarks"/>
-      <IntVector Name="CollapsedFolds"/>
-    </TabInfo>
-    <TabInfo>
-      <wxString Value="/home/xavier/Documents/FMJ/om-project/include/scene/Scene.hpp" Name="FileName"/>
-      <int Value="0" Name="FirstVisibleLine"/>
-      <int Value="0" Name="CurrentLine"/>
+      <int Value="90" Name="FirstVisibleLine"/>
+      <int Value="113" Name="CurrentLine"/>
       <wxArrayString Name="Bookmarks"/>
       <IntVector Name="CollapsedFolds"/>
     </TabInfo>
     <TabInfo>
       <wxString Value="/home/xavier/Documents/FMJ/om-project/src/gui.h" Name="FileName"/>
+      <int Value="335" Name="FirstVisibleLine"/>
+      <int Value="333" Name="CurrentLine"/>
+      <wxArrayString Name="Bookmarks"/>
+      <IntVector Name="CollapsedFolds"/>
+    </TabInfo>
+    <TabInfo>
+      <wxString Value="/home/xavier/Documents/FMJ/om-project/src/Scene.hpp" Name="FileName"/>
+      <int Value="139" Name="FirstVisibleLine"/>
+      <int Value="158" Name="CurrentLine"/>
+      <wxArrayString Name="Bookmarks"/>
+      <IntVector Name="CollapsedFolds"/>
+    </TabInfo>
+    <TabInfo>
+      <wxString Value="/home/xavier/Documents/FMJ/om-project/src/scene_interface.h" Name="FileName"/>
+      <int Value="6" Name="FirstVisibleLine"/>
+      <int Value="7" Name="CurrentLine"/>
+      <wxArrayString Name="Bookmarks"/>
+      <IntVector Name="CollapsedFolds"/>
+    </TabInfo>
+    <TabInfo>
+      <wxString Value="/home/xavier/Documents/FMJ/om-project/include/geometry/Quaternion.hpp" Name="FileName"/>
       <int Value="0" Name="FirstVisibleLine"/>
+      <int Value="0" Name="CurrentLine"/>
+      <wxArrayString Name="Bookmarks"/>
+      <IntVector Name="CollapsedFolds"/>
+    </TabInfo>
+    <TabInfo>
+      <wxString Value="/home/xavier/Documents/FMJ/om-project/include/scene/Object3D.hpp" Name="FileName"/>
+      <int Value="100" Name="FirstVisibleLine"/>
+      <int Value="98" Name="CurrentLine"/>
+      <wxArrayString Name="Bookmarks"/>
+      <IntVector Name="CollapsedFolds"/>
+    </TabInfo>
+    <TabInfo>
+      <wxString Value="/home/xavier/Documents/FMJ/om-project/include/geometry/LineSegment.hpp" Name="FileName"/>
+      <int Value="0" Name="FirstVisibleLine"/>
+      <int Value="0" Name="CurrentLine"/>
+      <wxArrayString Name="Bookmarks"/>
+      <IntVector Name="CollapsedFolds"/>
+    </TabInfo>
+    <TabInfo>
+      <wxString Value="/home/xavier/Documents/FMJ/om-project/src/gui_interface.h" Name="FileName"/>
+      <int Value="9" Name="FirstVisibleLine"/>
       <int Value="7" Name="CurrentLine"/>
       <wxArrayString Name="Bookmarks"/>
       <IntVector Name="CollapsedFolds"/>

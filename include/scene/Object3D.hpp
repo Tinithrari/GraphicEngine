@@ -92,6 +92,15 @@ namespace scene
 
     public:
 
+        Object3D()
+        {
+        }
+
+        Object3D(const Object3D &o) : vertex(o.vertex), faces(o.faces)
+        {
+            
+        }
+
         /** \brief Construit un objet à l'aide de ces points
          *
          * \param vertex Points de l'objet

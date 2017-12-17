@@ -157,9 +157,9 @@ namespace geometry
          * @brief Transforme un plan
          * @return Le plan transforme
          */
-        Plane<real, 3> transform(const Plane<real, 3> &p) const
+        Plane<real> transform(const Plane<real> &p) const
         {
-            return Plane<real, 3>(transform(p.GetP()), transform(p.GetD()));
+            return Plane<real>(transform(p.GetP()), transform(p.GetN()));
         }
         
         /**

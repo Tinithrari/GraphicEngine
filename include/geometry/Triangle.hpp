@@ -60,7 +60,7 @@ namespace geometry
          * Accesseur pour p0
          * @return p0
          */
-        Point<T, TRIANGLE_DIMENSION> get_p0()
+        Point<T, TRIANGLE_DIMENSION> get_p0() const
         {
             return p0;
         }
@@ -69,7 +69,7 @@ namespace geometry
          * Accesseur pour p1
          * @return p1
          */
-        Point<T, TRIANGLE_DIMENSION> get_p1()
+        Point<T, TRIANGLE_DIMENSION> get_p1() const
         {
             return p1;
         }
@@ -78,7 +78,7 @@ namespace geometry
          * Accesseur pour p2
          * @return p2
          */
-        Point<T, TRIANGLE_DIMENSION> get_p2()
+        Point<T, TRIANGLE_DIMENSION> get_p2() const
         {
             return p2;
         }
