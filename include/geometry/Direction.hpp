@@ -16,9 +16,19 @@ namespace geometry
      * Représente une direction de dimension N, où les coordonnées sont de type T
      */
     template <class T, unsigned int N>
-    class Direction : Vector<T, N>
+    class Direction : public math::Vector<T, N>
     {
     public:
-        using math::Vector::Vector; /*<! Indique l'usage des constructeurs de Vector comme constructeurs de Direction */
+        using math::Vector<T, N>::Vector; /*<! Indique l'usage des constructeurs de Vector comme constructeurs de Direction */
+        
+        Direction(const math::Vector<T, N> &v) : Direction::Vector(v)
+        {
+            
+        }
+        
+        Direction() : Direction::Vector()
+        {
+            
+        }
     };
 }

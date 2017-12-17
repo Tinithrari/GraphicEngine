@@ -14,7 +14,7 @@
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-g" />
-					<Add directory="C:/Users/xavie/Documents/M2S1/FMJ/om-project/include" />
+					<Add directory="include" />
 				</Compiler>
 			</Target>
 			<Target title="Release">
@@ -34,6 +34,8 @@
 			<Add option="-Wall" />
 		</Compiler>
 		<Unit filename="include/MatrixTest.hpp" />
+		<Unit filename="include/Object3DTest.hpp" />
+		<Unit filename="include/TriangleTest.hpp" />
 		<Unit filename="include/geometry/Direction.hpp" />
 		<Unit filename="include/geometry/LineSegment.hpp" />
 		<Unit filename="include/geometry/Plane.hpp" />
@@ -45,9 +47,11 @@
 		<Unit filename="include/geometry/Triangle.hpp" />
 		<Unit filename="include/math/Matrix.hpp" />
 		<Unit filename="include/math/Vector.hpp" />
+		<Unit filename="include/scene/Object3D.hpp" />
 		<Unit filename="include/unit_test.h" />
 		<Unit filename="src/main.cpp" />
 		<Unit filename="test/MatrixTest.cpp" />
+		<Unit filename="test/Object3DTest.cpp" />
 		<Unit filename="test/test_libmatrix.cpp" />
 		<Extensions>
 			<code_completion />

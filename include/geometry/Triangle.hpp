@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Point.hpp"
+#include "geometry/Point.hpp"
 
 #include <iostream>
 
@@ -34,7 +34,7 @@ namespace geometry
          * @param p2 Le deuxieme point du triangle
          * @param p3 Le troisieme point du triangle
          */
-        Triangle(Point &p1, Point &p2, Point &p3) : p1(p1), p2(p2), p3(p3)
+        Triangle(Point<T, TRIANGLE_DIMENSION> &p0, Point<T, TRIANGLE_DIMENSION> &p1, Point<T, TRIANGLE_DIMENSION> &p2) : p0(p0), p1(p1), p2(p2)
         {
         }
 
@@ -53,14 +53,14 @@ namespace geometry
          */
         bool is_null()
         {
-            return p1.is_null() || p2.is_null() || p3.is_null();
+            return p0.is_null() || p1.is_null() || p2.is_null();
         }
 
         /**
          * Accesseur pour p0
          * @return p0
          */
-        Point<T, TRIANGLE_DIMENSION> get_p0()
+        Point<T, TRIANGLE_DIMENSION> get_p0() const
         {
             return p0;
         }
@@ -69,7 +69,7 @@ namespace geometry
          * Accesseur pour p1
          * @return p1
          */
-        Point<T, TRIANGLE_DIMENSION> get_p1()
+        Point<T, TRIANGLE_DIMENSION> get_p1() const
         {
             return p1;
         }
@@ -78,16 +78,17 @@ namespace geometry
          * Accesseur pour p2
          * @return p2
          */
-        Point<T, TRIANGLE_DIMENSION> get_p2()
+        Point<T, TRIANGLE_DIMENSION> get_p2() const
         {
             return p2;
         }
 
-        friend std::ostream& operator<<(std::ostream& out, Triangle& t);
+        template <class U>
+        friend std::ostream& operator<<(std::ostream& out, const Triangle<U>& t);
     };
 
     template<class T>
-    std::ostream& operator<<(std::ostream& out, Triangle<T>& t)
+    std::ostream& operator<<(std::ostream& out, const Triangle<T>& t)
     {
         out << "P0 : " << t.p0 << " P1 : " << t.p1 << " P2 : " << t.p2;
         return out;

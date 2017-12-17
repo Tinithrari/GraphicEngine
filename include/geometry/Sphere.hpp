@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Point.hpp"
-#include "Plane.hpp"
+#include "geometry/Point.hpp"
+#include "geometry/Plane.hpp"
 
 #include <stdexcept>
 #include <iostream>
@@ -25,7 +25,7 @@ namespace geometry
         /** \brief Constructeur par défaut
          *
          */
-        Sphere() center(), radius(0)
+        Sphere() : center(), radius(0)
         {
 
         }
@@ -36,7 +36,7 @@ namespace geometry
          * \param radius le rayon de la sphere
          * \return Sphere(Point &center, float radius):
          */
-        Sphere(Point &center, float radius) : center(center)
+        Sphere(const Point<T, SPHERE_DIMENSION> &center, const float radius) : center(center)
         {
             if (radius < 0)
                 throw std::invalid_argument("The radius must be postive");
@@ -49,9 +49,11 @@ namespace geometry
          * \param p Le plan à verifier
          * \return true si la sphere est derriere le plan, false sinon
          */
-        bool behind(Plane &p)
+        bool behind(const Plane<T> &p) const
         {
-            return p.positionFrom(center) < 0;
+            Point<T, SPHERE_DIMENSION> min({center[0] - radius, center[1] - radius, center[2] - radius});
+            Point<T, SPHERE_DIMENSION> max({center[0] + radius, center[1] + radius, center[2] + radius});
+            return p.isFrontOf(min) && p.isFrontOf(max);
         }
 
         /** \brief Vérifie si un point est contenu dans la sphere
@@ -59,7 +61,7 @@ namespace geometry
          * \param p Le point à verifier
          * \return true si le point est dans la sphere, false sinon
          */
-        bool contains(Point &p)
+        bool contains(const Point<T, SPHERE_DIMENSION> &p) const
         {
             return (p[0] >= center[0] - radius && p[0] <= center[0] + radius) && (p[1] >= center[1] - radius && p[1] <= center[1] + radius) && (p[2] >= center[2] - radius && p[2] <= center[2] + radius);
         }
@@ -68,7 +70,7 @@ namespace geometry
          *
          * \return true si les coordonnées sont invalides, false sinon
          */
-        bool is_null()
+        bool is_null() const
         {
             return center.is_null() || std::isnan(radius);
         }
@@ -77,18 +79,37 @@ namespace geometry
          *
          * \return Le centre de la sphere
          */
-        Point<T, SPHERE_DIMENSION> getCenter()
+        Point<T, SPHERE_DIMENSION> getCenter() const
         {
             return center;
+        }
+
+
+        /** \brief Accesseur pour le centre de la sphere
+         *
+         * \return Le centre de la sphere
+         */
+        void setCenter(const Point<T, SPHERE_DIMENSION> &p)
+        {
+            center = p;
         }
 
         /** \brief Accesseur pour le rayon de la sphere
          *
          * \return Le rayon de la sphere
          */
-        float getRadius()
+        float getRadius() const
         {
             return radius;
+        }
+
+        /** \brief Accesseur pour le rayon de la sphere
+         *
+         * \return Le rayon de la sphere
+         */
+        void setRadius(const float r)
+        {
+            radius = r;
         }
     };
 

@@ -19,7 +19,7 @@
 
 #include "gui_interface.h"
 
-using namespace libmatrix;
+using namespace math;
 
 namespace gui {
 
@@ -32,7 +32,7 @@ class Gui : public GuiInterface
         unsigned int get_win_width() const override;
         unsigned int get_win_height() const override;
 
-        void render_line( Vec2r, Vec2r, Color ) const override;
+        void render_line(const Vec2r&, const Vec2r&, Color ) const override;
         void render_point( Vec2r, Color ) const override;
         void render_text( Vec2r, std::string, Color ) const override;
 
@@ -257,19 +257,19 @@ void Gui::main_loop( SceneInterface * scene ) const
 					case SDLK_SPACE:
 						scene->release_space();
 						break;
-                    case SDLK_w:
+                    case SDLK_z:
                     case SDLK_s:
                         scene->release_ws();
                         break;
-                    case SDLK_a:
+                    case SDLK_q:
                     case SDLK_d:
                         scene->release_ad();
                         break;
-                    case SDLK_q:
+                    case SDLK_a:
                     case SDLK_e:
                         scene->release_qe();
                         break;
-                    case SDLK_z:
+                    case SDLK_w:
                     case SDLK_x:
                         scene->release_zx();
                         break;
@@ -331,7 +331,7 @@ void Gui::render_point( Vec2r p, Color c ) const
 //! Draws a line on the screen.
 //! @param a, b -- two coordinates on the screen.
 //! @param c -- color of the line.
-void Gui::render_line( Vec2r a, Vec2r b, Color c ) const
+void Gui::render_line(const Vec2r & a,const Vec2r & b, Color c ) const
 {
     Vec2i sc0 = this->screen_coords( a );
     Vec2i sc1 = this->screen_coords( b );

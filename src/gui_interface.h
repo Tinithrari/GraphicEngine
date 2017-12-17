@@ -9,9 +9,10 @@
 #define _GUI_INTERFACE_H
 
 #include <stdexcept>
-#include "libmatrix.h"
+#include "math/Vector.hpp"
+#include "math/Matrix.hpp"
 
-using namespace libmatrix;
+using namespace math;
 
 namespace gui {
 
@@ -45,7 +46,7 @@ class GuiInterface
         virtual unsigned int get_win_width() const = 0;
         virtual unsigned int get_win_height() const = 0;
 
-        virtual void render_line( Vec2r, Vec2r, Color ) const = 0;
+        virtual void render_line( const Vec2r&, const Vec2r&, Color ) const = 0;
         virtual void render_point( Vec2r, Color ) const = 0;
         virtual void render_text( Vec2r, std::string, Color ) const = 0;
 };

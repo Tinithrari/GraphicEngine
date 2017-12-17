@@ -11,6 +11,13 @@ using namespace std;
 
 namespace math
 {
+    /**
+     * @class Matrix
+     * @author xavier
+     * @date 22/11/17
+     * @file Matrix.hpp
+     * @brief Utilitaire pour la manipulation de matrice
+     */
     template<class T, unsigned int n, unsigned int m>
     class Matrix
     {
@@ -18,6 +25,10 @@ namespace math
         array<array<T, m>, n> mat;
 
     public:
+        /**
+         * @brief Construit une matrice nulle
+         * @return La matrice nulle de dimension n, m
+         */
         Matrix() 
         {
             if (n == 0 || m == 0)
@@ -31,6 +42,12 @@ namespace math
                 }
             }
         }
+        
+        /**
+         * @brief Constructeur par recopie
+         * @param m2 La matrice a recopier
+         * @return Une copie de la matrice m2
+         */
         Matrix(const Matrix &m2)
         {
             for (int i = 0; i < n; ++i)
@@ -42,6 +59,10 @@ namespace math
             }
         }
 
+        /**
+         * @brief Initialise une matrice a l'aide d'un tableau de tableau
+         * @return La matrice equivalente au tableau passe en parametre
+         */
         Matrix(const initializer_list<initializer_list<T>> &table)
         {
             int i = 0;
@@ -55,9 +76,23 @@ namespace math
             }
         }
 
+        /**
+         * @brief Constructeur avec la structure de la STL
+         * @param a le tableau de tableau de la STL
+         */
         Matrix(array<array<T, m>, n> &a): mat(a) {}
 
+        /**
+         * @brief Destructeur
+         */
         ~Matrix() {}
+        
+        /**
+         * @brief Obtient la valeur situé à la coordonnées i, j
+         * @param i La coordonnées i de la matrice
+         * @param j La coordonnées j de la matrice
+         * @return La valeur situé à la coordonnées i, j
+         */
         T at(const unsigned int i, const unsigned int j) const
         {
             if (i >= n || j >= m)
@@ -66,6 +101,10 @@ namespace math
             return mat[i][j];
         }
 
+        /**
+         * @brief Calcule la matrice inverse
+         * @return La matrice inverse de la matrice courante
+         */
         Matrix<float, n, m> inverse() const
         {
 
@@ -137,6 +176,10 @@ namespace math
             return id;
         }
 
+        /**
+         * @brief Calcule la matrice identite de dimension n, m
+         * @return La matrice identite de dimension n, m
+         */
         Matrix identite() const
         {
             if (n != m)
@@ -151,6 +194,10 @@ namespace math
             return id;
         }
 
+        /**
+         * @brief Verifie si la matrice ne contient pas de coordonnées invalides
+         * @return true si une des coordonnées est invalide, false sinon
+         */
         bool is_null() const
         {
             for (int i = 0; i < n; ++i)
@@ -163,7 +210,11 @@ namespace math
             }
             return false;
         }
-
+        
+        /**
+         * @brief Verifie si la matrice est orthonormée
+         * @return True si la matrice est orthonormée, false sinon
+         */
         bool is_ortho() const
         {
             Matrix<float, n, m> rev;
@@ -175,6 +226,10 @@ namespace math
             return rev == transpose();
         }
 
+        /**
+         * @brief Calcule la transpose de la matrice
+         * @return La transpose de la matrice courante
+         */
         Matrix<T, m ,n> transpose() const
         {
             Matrix<T, m, n> res;
@@ -190,16 +245,31 @@ namespace math
             return res;
         }
 
+        /**
+         * @brief Accede à la ligne i de la matrice
+         * @param i l'index de la ligne voulu
+         * @return La i-eme ligne
+         */
         array<T, m> operator[](const int i) const
         {
             return mat[i];
         }
 
+        /**
+         * @brief Permet d'obtenir une reference sur la ieme ligne
+         * @param i l'index de la ligne
+         * @return Une reference sur la ieme ligne
+         */
         array<T, m> &operator[](const int i)
         {
             return mat[i];
         }
 
+        /**
+         * @brief Additionne deux matrice
+         * @param m2 la matrice a additionner a la matrice courante
+         * @return La matrice resultant de la matrice courante
+         */
         Matrix operator+(const Matrix &m2) const
         {
             Matrix res;
@@ -214,6 +284,10 @@ namespace math
             return res;
         }
 
+        /**
+         * @brief Operateur d'affectation
+         * @param a le tableau de tableau a affecter a la matrice
+         */
         Matrix &operator =(const array<array<T, m>, n> &a)
         {
             for (int i = 0; i < n; ++i)
@@ -226,6 +300,10 @@ namespace math
             return *this;
         }
 
+        /**
+         * @brief Addition directement une matrice a la matrice courante
+         * @param m2 la matrice a ajouter a la matrice courante
+         */
         Matrix &operator+=(const Matrix &m2)
         {
             for (int i = 0; i < n; ++i)
@@ -237,6 +315,10 @@ namespace math
             }
         }
 
+        /**
+         * @brief Multiplie un vecteur a la matrice courante
+         * @param v le vecteur a multiplier a la matrice courante
+         */
         Matrix<T, n, 1> operator*(const Vector<T, m> &v) const
         {
             Matrix<T, n, 1> res;
@@ -252,6 +334,11 @@ namespace math
             return res;
         }
 
+        /**
+         * @brief Multiplication de matrice avec un scalaire
+         * @param scalar le scalaire a multiplier a la matrice
+         * @return La matrice resultant de la multiplication
+         */
         Matrix operator*(const float scalar) const
         {
             Matrix res;
@@ -267,6 +354,11 @@ namespace math
             return res;
         }
 
+        /**
+         * @brief Multiplication de deux matrice non identique
+         * @param m2 La matrice a multiplier a la matrice courante
+         * @return La matrice resultant de la multiplication
+         */
         template<unsigned int o>
         Matrix<T, n, o> operator*(const Matrix<T, m, o> &m2) const
         {
@@ -286,6 +378,10 @@ namespace math
             return res;
         }
 
+        /**
+         * @brief Multiplie directement la matrice courante a un scalaire
+         * @param scalar le scalaire a multiplier a la matrice courante
+         */
         Matrix operator*=(const float scalar)
         {
             for (int i = 0; i < n; ++i)
@@ -297,6 +393,11 @@ namespace math
             }
         }
 
+        /**
+         * @brief Verifie si une matrice est égale a la matrice courante
+         * @param m2 la matrice a comparer
+         * @return true si les deux matrices sont egales, false sinon
+         */
         bool operator==(const Matrix &m2) const
         {
             for (int i = 0; i < n; ++i)
@@ -311,6 +412,11 @@ namespace math
             return true;
         }
 
+        /**
+         * @brief Compare une matrice d'un autre type avec la matrice courante
+         * @param m2 la matrice a comparer
+         * @return true si les matrices sont egales, false sinon
+         */
         template <class U>
         bool operator==(const Matrix<U, n, m> &m2) const
         {
@@ -327,6 +433,12 @@ namespace math
         }
     };
 
+    /**
+     * @brief Verification de l'egalite entre deux matrices
+     * @param m1 Une matrice
+     * @param m2 Une matrice
+     * @return true si m1=m2, false sinon
+     */
     template <class T, class U, unsigned int n, unsigned int m>
     bool operator==(const Matrix<T, n, m> &m1, const Matrix<U, n, m> &m2)
     {
@@ -342,6 +454,12 @@ namespace math
         return true;
     }
 
+    /**
+     * @brief Produit d'une matrice avec un scalaire
+     * @param scalar le scalaire a multiplier a la matrice
+     * @param matrice La matrice a multiplier
+     * @return la matrice resultant de la multplication
+     */
     template<class T, unsigned int n, unsigned int m>
     Matrix<T, n, m> &operator*(float scalar, Matrix<T, n, m> &matrice)
     {
@@ -357,7 +475,25 @@ namespace math
         
         return res;
     }
+    
+    //
+    template<class T, unsigned int n, unsigned int m>
+    Vector<T, m> operator*(const Vector<T, m>& v, const Matrix<T, n, m>& mat)
+    {
+        Vector<T, m> vec;
+        for (int i = 0; i < m; ++i)
+            for (int j = 0; j < n; ++j)
+                vec[i] += v[j] * mat[j][i];
 
+        return vec;
+    }
+
+    /**
+     * @brief Operation d'affichage pour la matrice
+     * @param out le flux de sortie
+     * @param matrice la matrice a afficher
+     * @return le flux pour enchainer les affichages
+     */
     template<class T, unsigned int n, unsigned int m>
     ostream &operator<<(ostream &out, const Matrix<T, n, m> &matrice)
     {
